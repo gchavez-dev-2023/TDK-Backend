@@ -16,6 +16,7 @@ const createUser = async (req, res) => {
     try {
         //Buscar por email = email
         const existeMail = await Usuario.findOne({ email });
+
         //Si existe correo enviar error
         if ( existeMail ) {
             return res.status(400).json({
@@ -23,6 +24,7 @@ const createUser = async (req, res) => {
                 msg: 'El correo ya está registrado'
             });
         }
+        
         //Crear usuario
         const usuario = new Usuario(req.body);
         await usuario.save();
