@@ -1,0 +1,28 @@
+### Recuperar los usuarios
+GET http://localhost:3000/api/usuarios
+
+
+### Crear usuario
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+    "nombre": "pedro hernandez",
+    "email": "pedro.h@gmail.com",
+    "password": "1234"
+}
+
+### Recuperar un usuario
+GET http://localhost:3000/api/usuarios/63d82815d13b0e6d54e76839
+
+
+### Actualizar un usuario
+PUT http://localhost:3000/api/usuarios/63d82a02abea0f756b5dd4f6
+Content-Type: application/json
+
+{
+    "salary": 1000
+}
+
+### Eliminar un usuario
+DELETE http://localhost:3000/api/usuarios/63d82815d13b0e6d54e76839

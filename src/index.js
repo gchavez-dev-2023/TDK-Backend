@@ -8,4 +8,4 @@ dbConnection();
 
 app.listen(app.get('port'));
 
-console.log('server',app.get('port'));
+console.log('Servidor Activo');
