@@ -1,5 +1,6 @@
 ### Recuperar los usuarios
 GET http://localhost:3000/api/usuarios
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RjMTUzMTI4MDYxYzAyNWM1ZWU5YzgiLCJpYXQiOjE2NzUzNzcwMjYsImV4cCI6MTY3NTQyMDIyNn0.R5xpCjQHToK4mvAgtNC5OqB_6KO_RDY6c_TSSiWtYqs
 
 
 ### Crear usuario
@@ -17,12 +18,24 @@ GET http://localhost:3000/api/usuarios/63d82815d13b0e6d54e76839
 
 
 ### Actualizar un usuario
-PUT http://localhost:3000/api/usuarios/63d82a02abea0f756b5dd4f6
+PUT http://localhost:3000/api/usuarios/63dc153128061c025c5ee9c8
 Content-Type: application/json
 
 {
-    "salary": 1000
+    "nombre": "pedro p. hernandez",
+    "email": "pedro.h@gmail.com",
+    "role": "USER_ROLE"
 }
 
 ### Eliminar un usuario
 DELETE http://localhost:3000/api/usuarios/63d82815d13b0e6d54e76839
+
+
+### login
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "email": "pedro.h@gmail.com",
+    "password": "1234"
+}
