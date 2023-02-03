@@ -3,35 +3,31 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 const router = Router();
 
-const { getUsers, createUser, getUser, updateUser, deleteUser } = require('../controllers/usuarios.controller');
+const { getSubCategories, createSubCategory, getSubCategory, updateSubCategory, deleteSubCategory } = require('../controllers/subcategorias.controller');
 const { validarJWT } = require('../middlewares/validar-jwt');
 //CRUD
 // create - read - update - delete
 
-router.get('/', validarJWT, getUsers);
+router.get('/', validarJWT, getSubCategories);
 
 router.post('/', 
     [
     validarJWT,
     check('nombre', 'El nombre es obligatorio.').not().isEmpty(),
-    check('password', 'El password es obligatorio.').not().isEmpty(),
-    check('email', 'El email es obligatorio.').isEmail(),
     validarCampos,
     ]
-    , createUser);
+    , createSubCategory);
 
-router.get('/:id', validarJWT, getUser);
+router.get('/:id', validarJWT, getSubCategory);
 
 router.put('/:id', 
     [
     validarJWT,
     check('nombre', 'El nombre es obligatorio.').not().isEmpty(),
-    check('email', 'El email es obligatorio.').isEmail(),
-    check('role', 'El role es obligatorio.').not().isEmpty(),
     validarCampos,
     ]
-    , updateUser);
+    , updateSubCategory);
     
-router.delete('/:id', validarJWT, deleteUser);
+router.delete('/:id', validarJWT, deleteSubCategory);
 
 module.exports = router;
