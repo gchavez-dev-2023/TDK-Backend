@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const AcademiaSchema = new Schema({
-    nombre: {type: String, required: true},
+    nombre: {type: String, required: true, unique: true},
     direccion: {type: String}
 });
 

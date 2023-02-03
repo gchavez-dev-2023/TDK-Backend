@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const ClaseSchema = new Schema({
-    nombre: {type: String, required: true},
+    nombre: {type: String, required: true, unique: true},
     descripcion: {type: String},
     fechaInicio: {type: Date},
     fechaFin: {type: Date}

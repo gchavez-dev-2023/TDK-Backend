@@ -32,6 +32,8 @@ app.use('/api/subcategorias', require('./routes/subcategorias.routes'));
 app.use('/api/niveles', require('./routes/niveles.routes'));
 app.use('/api/clases', require('./routes/clases.routes'));
 
+app.use('/api/suscripciones', require('./routes/suscripciones.routes'));
+
 app.use('/api/login', require('./routes/auth.routes'));
 
 module.exports = app;

@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const CategoriaSchema = new Schema({
-    nombre: {type: String, required: true},
+    nombre: {type: String, required: true, unique: true},
     descripcion: {type: String}
 });
 
