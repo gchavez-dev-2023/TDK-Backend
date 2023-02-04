@@ -2,7 +2,7 @@ const { response } = require('express');
 const Instructor = require('../models/Instructor');
 
 const getInstructors = async (req, res = response) => {
-    const Instructores = await Instructor.find({}, 'nombre email role google ');
+    const Instructores = await Instructor.find({}, 'rut nombres apellidos fechaNacimiento telefono');
 
     res.json({
         ok: true,
@@ -12,17 +12,17 @@ const getInstructors = async (req, res = response) => {
 
 const createInstructor = async (req, res = response) => {
     //Desestructurar el body
-    const {email, password, nombre} = req.body;
+    const {rut, nombres, apellidos, fechaNacimiento, telefono} = req.body;
 
     try {
-        //Buscar por email = email
-        const existeMail = await Instructor.findOne({ email });
+        //Buscar por rut = rut
+        const existeRut = await Instructor.findOne({ rut });
 
-        //Si existe correo enviar error
-        if ( existeMail ) {
+        //Si existe rut enviar error
+        if ( existeRut ) {
             return res.status(400).json({
                 ok: false,
-                msg: 'El correo ya está registrado'
+                msg: 'El rut ya está registrado'
             });
         }
         
@@ -49,14 +49,27 @@ const createInstructor = async (req, res = response) => {
 }
 
 const getInstructor = async (req, res = response) => {
-    //console.log(req.params)
-    const Instructor = await Instructor.findById(req.params.id);
-    res.send(Instructor);
+    try{
+        //console.log(req.params)
+        const Instructor = await Instructor.findById(req.params.id);
+        
+        res.json({
+            ok: true,
+            Instructor            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateInstructor = async(req, res = response) => {
     //Desestructurar campos enviados desde la peticion
-    const {password, google, email, ...campos } = req.body;
+    const {rut, ...campos } = req.body;
 
     //console.log(req.params)
     try {
@@ -71,20 +84,20 @@ const updateInstructor = async(req, res = response) => {
             });
         }
 
-        //Verificar si email ya no es igual a del Instructor en la BD
-        if (existeDB.email !== email){
-            //Verificar si el email nuevo ya se encuentra registrado
-            const existeMail = await Instructor.findOne({email});
+        //Verificar si rut ya no es igual a del Instructor en la BD
+        if (existeDB.rut !== rut){
+            //Verificar si el rut nuevo ya se encuentra registrado
+            const existeRut = await Instructor.findOne({rut});
 
             //Si existe se responde error
-            if (existeMail){
+            if (existeRut){
                 return res.status(400).json({
                     ok: false,
-                    msg: 'El correo ya está registrado'
+                    msg: 'El rut ya está registrado'
                 });
             }
-            //Agregar el mail a los campos a actualizar
-            campos.email = email;
+            //Agregar el rut a los campos a actualizar
+            campos.rut = rut;
         }
 
         const InstructorActualizado = await Instructor.findByIdAndUpdate(req.params.id, campos);

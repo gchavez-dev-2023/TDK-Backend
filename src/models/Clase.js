@@ -4,7 +4,8 @@ const ClaseSchema = new Schema({
     nombre: {type: String, required: true, unique: true},
     descripcion: {type: String},
     fechaInicio: {type: Date},
-    fechaFin: {type: Date}
+    fechaFin: {type: Date},
+    instructor: {type: String}
 });
 
 //Configuración para que campo "_id" tengo el nombre "uid"

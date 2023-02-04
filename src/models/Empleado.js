@@ -1,10 +1,12 @@
 const {Schema, model} = require('mongoose');
 
 const EmpleadoSchema = new Schema({
-    name: {type: String, required: true},
-    position: {type: String, required: true},
-    office: {type: String, required: true},
-    salary: {type: Number, required: true},
+    rut: {type: String, required: true, unique: true},
+    nombres: {type: String, required: true},
+    apellidos: {type: String, required: true},
+    fechaNacimiento: {type: Date },
+    telefono: {type: String },
+    img: {type: String},
 });
 
 module.exports = model('Empleado', EmpleadoSchema);

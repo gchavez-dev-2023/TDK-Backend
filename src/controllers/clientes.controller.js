@@ -2,7 +2,7 @@ const { response } = require('express');
 const Cliente = require('../models/Cliente');
 
 const getClients = async (req, res = response) => {
-    const Clientes = await Cliente.find({}, 'nombre email role google ');
+    const Clientes = await Cliente.find({}, 'rut nombres apellidos fechaNacimiento telefono');
 
     res.json({
         ok: true,
@@ -12,17 +12,17 @@ const getClients = async (req, res = response) => {
 
 const createClient = async (req, res = response) => {
     //Desestructurar el body
-    const {email, password, nombre} = req.body;
+    const {rut, nombres, apellidos, fechaNacimiento, telefono} = req.body;
 
     try {
-        //Buscar por email = email
-        const existeMail = await Cliente.findOne({ email });
+        //Buscar por rut = rut
+        const existeRut = await Cliente.findOne({ rut });
 
-        //Si existe correo enviar error
-        if ( existeMail ) {
+        //Si existe rut enviar error
+        if ( existeRut ) {
             return res.status(400).json({
                 ok: false,
-                msg: 'El correo ya está registrado'
+                msg: 'El rut ya está registrado'
             });
         }
         
@@ -49,14 +49,27 @@ const createClient = async (req, res = response) => {
 }
 
 const getClient = async (req, res = response) => {
-    //console.log(req.params)
-    const Cliente = await Cliente.findById(req.params.id);
-    res.send(Cliente);
+    try{
+        //console.log(req.params)
+        const Cliente = await Cliente.findById(req.params.id);
+        
+        res.json({
+            ok: true,
+            Cliente            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateClient = async(req, res = response) => {
     //Desestructurar campos enviados desde la peticion
-    const {password, google, email, ...campos } = req.body;
+    const {rut, ...campos } = req.body;
 
     //console.log(req.params)
     try {
@@ -72,19 +85,19 @@ const updateClient = async(req, res = response) => {
         }
 
         //Verificar si email ya no es igual a del Cliente en la BD
-        if (existeDB.email !== email){
+        if (existeDB.rut !== rut){
             //Verificar si el email nuevo ya se encuentra registrado
-            const existeMail = await Cliente.findOne({email});
+            const existeRut = await Cliente.findOne({rut});
 
             //Si existe se responde error
-            if (existeMail){
+            if (existeRut){
                 return res.status(400).json({
                     ok: false,
-                    msg: 'El correo ya está registrado'
+                    msg: 'El rut ya está registrado'
                 });
             }
-            //Agregar el mail a los campos a actualizar
-            campos.email = email;
+            //Agregar el rut a los campos a actualizar
+            campos.rut = rut;
         }
 
         const ClienteActualizado = await Cliente.findByIdAndUpdate(req.params.id, campos);

@@ -1,12 +1,12 @@
 const {Schema, model} = require('mongoose');
 
 const InstructorSchema = new Schema({
-    nombre: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
+    rut: {type: String, required: true, unique: true},
+    nombres: {type: String, required: true},
+    apellidos: {type: String, required: true},
+    fechaNacimiento: {type: Date },
+    telefono: {type: String },
     img: {type: String},
-    rol: {type: String, required: true, default: 'USER_ROLE'},
-    google: {type: Boolean, default: false},
 });
 
 //Configuración para que campo "_id" tengo el nombre "uid"

@@ -48,9 +48,22 @@ const createClass = async (req, res = response) => {
 }
 
 const getClass = async (req, res = response) => {
-    //console.log(req.params)
-    const Clase = await Clase.findById(req.params.id);
-    res.send(Clase);
+    try {
+        //console.log(req.params)
+        const Clase = await Clase.findById(req.params.id);
+        
+        res.json({
+            ok: true,
+            Clase            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateClass = async(req, res = response) => {

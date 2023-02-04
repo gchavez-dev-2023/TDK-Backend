@@ -1,12 +1,12 @@
 const { response } = require('express');
-const Subcripcion = require('../models/Subcripcion');
+const Suscripcion = require('../models/Suscripcion');
 
 const getSubcriptions = async (req, res = response) => {
-    const Subcripciones = await Subcripcion.find({}, 'cliente clase fechaSuscripcion');
+    const Suscripciones = await Suscripcion.find({}, 'cliente clase fechaSuscripcion');
 
     res.json({
         ok: true,
-        Subcripciones            
+        Suscripciones            
     });
 }
 
@@ -16,7 +16,7 @@ const createSubcription = async (req, res = response) => {
 
     try {
         //Buscar por cliente clase = nombre
-        const existeSubscripcion = await Subcripcion.findOne({ cliente, clase });
+        const existeSubscripcion = await Suscripcion.findOne({ cliente, clase });
 
         //Si existe nombre enviar error
         if ( existeSubscripcion ) {
@@ -26,16 +26,16 @@ const createSubcription = async (req, res = response) => {
             });
         }
         
-        //Crear Subcripcion
-        const Subcripcion = new Subcripcion(req.body);
+        //Crear Suscripcion
+        const Suscripcion = new Suscripcion(req.body);
 
-        //Guardar nuevo Subcripcion
-        await Subcripcion.save();
+        //Guardar nuevo Suscripcion
+        await Suscripcion.save();
 
-        console.log(Subcripcion);
+        console.log(Suscripcion);
         res.json({
             ok: true,
-            Subcripcion       
+            Suscripcion       
         });
         
     } catch (error) {
@@ -48,9 +48,21 @@ const createSubcription = async (req, res = response) => {
 }
 
 const getSubcription = async (req, res = response) => {
-    //console.log(req.params)
-    const Subcripcion = await Subcripcion.findById(req.params.id);
-    res.send(Subcripcion);
+    try {
+        //console.log(req.params)
+        const Suscripcion = await Suscripcion.findById(req.params.id);
+        
+        res.json({
+            ok: true,
+            Suscripcion            
+        });    
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateSubcription = async(req, res = response) => {
@@ -60,20 +72,20 @@ const updateSubcription = async(req, res = response) => {
     //console.log(req.params)
     try {
         //Buscar por BY = ID
-        const existeDB = await Subcripcion.findById(req.params.id);
+        const existeDB = await Suscripcion.findById(req.params.id);
 
-        //Si no existe Subcripcion enviar error
+        //Si no existe Suscripcion enviar error
         if ( !existeDB ) {
             return res.status(404).json({
                 ok: false,
-                msg: 'No existe Subcripcion por el ID.'
+                msg: 'No existe Suscripcion por el ID.'
             });
         }
 
-        //Verificar si email ya no es igual a del Subcripcion en la BD
+        //Verificar si email ya no es igual a del Suscripcion en la BD
         if (existeDB.cliente !== cliente || existeDB.clase !== clase){
             //Verificar si el email nuevo ya se encuentra registrado
-            const existeSubscripcion = await Subcripcion.findOne({cliente, clase});
+            const existeSubscripcion = await Suscripcion.findOne({cliente, clase});
 
             //Si existe se responde error
             if (existeSubscripcion){
@@ -87,11 +99,11 @@ const updateSubcription = async(req, res = response) => {
             campos.clase = clase;
         }
 
-        const SubcripcionActualizado = await Subcripcion.findByIdAndUpdate(req.params.id, campos);
+        const SuscripcionActualizado = await Suscripcion.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Subcripcion: SubcripcionActualizado     
+            Suscripcion: SuscripcionActualizado     
         });
         
     } catch (error) {
@@ -106,18 +118,18 @@ const updateSubcription = async(req, res = response) => {
 const deleteSubcription = async (req, res = response) => {
     try {
         //Buscar por BY = ID
-        const existeDB = await Subcripcion.findById(req.params.id);
+        const existeDB = await Suscripcion.findById(req.params.id);
 
-        //Si no existe Subcripcion enviar error
+        //Si no existe Suscripcion enviar error
         if ( !existeDB ) {
             return res.status(404).json({
                 ok: false,
-                msg: 'No existe Subcripcion por el ID.'
+                msg: 'No existe Suscripcion por el ID.'
             });
         }
 
         //console.log(req.params)
-        const Subcripcion = await Subcripcion.findByIdAndDelete(req.params.id);
+        const Suscripcion = await Suscripcion.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

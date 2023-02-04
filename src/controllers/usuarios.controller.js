@@ -54,9 +54,21 @@ const createUser = async (req, res = response) => {
 }
 
 const getUser = async (req, res = response) => {
-    //console.log(req.params)
-    const Usuario = await Usuario.findById(req.params.id);
-    res.send(Usuario);
+    try {
+        //console.log(req.params)
+        const Usuario = await Usuario.findById(req.params.id);
+        
+        res.json({
+            ok: true,
+            Usuario            
+        });        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateUser = async(req, res = response) => {

@@ -48,9 +48,22 @@ const createLevel = async (req, res = response) => {
 }
 
 const getLevel = async (req, res = response) => {
-    //console.log(req.params)
-    const Nivel = await Nivel.findById(req.params.id);
-    res.send(Nivel);
+    try{
+        //console.log(req.params)
+        const Nivel = await Nivel.findById(req.params.id);
+        
+        res.json({
+            ok: true,
+            Nivel            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateLevel = async(req, res = response) => {

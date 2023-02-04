@@ -48,9 +48,22 @@ const createSubCategory = async (req, res = response) => {
 }
 
 const getSubCategory = async (req, res = response) => {
-    //console.log(req.params)
-    const SubCategoria = await SubCategoria.findById(req.params.id);
-    res.send(SubCategoria);
+    try {
+        //console.log(req.params)
+        const SubCategoria = await SubCategoria.findById(req.params.id);
+        
+        res.json({
+            ok: true,
+            SubCategoria            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateSubCategory = async(req, res = response) => {

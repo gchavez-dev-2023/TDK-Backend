@@ -48,9 +48,22 @@ const createCategory = async (req, res = response) => {
 }
 
 const getCategory = async (req, res = response) => {
-    //console.log(req.params)
-    const Categoria = await Categoria.findById(req.params.id);
-    res.send(Categoria);
+    try {
+        //console.log(req.params)
+        const Categoria = await Categoria.findById(req.params.id);
+        
+        res.json({
+            ok: true,
+            Categoria            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateCategory = async(req, res = response) => {

@@ -3,12 +3,12 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 const router = Router();
 
-const { getSuscriptions, createSuscription, getSuscription, updateSuscription, deleteSuscription } = require('../controllers/suscripciones.controller');
+const { getSubcriptions, createSubcription, getSubcription, updateSubcription, deleteSubcription } = require('../controllers/suscripciones.controller');
 const { validarJWT } = require('../middlewares/validar-jwt');
 //CRUD
 // create - read - update - delete
 
-router.get('/', validarJWT, getSuscriptions);
+router.get('/', validarJWT, getSubcriptions);
 
 router.post('/', 
     [
@@ -17,9 +17,9 @@ router.post('/',
     check('clase', 'El clase es obligatorio.').not().isEmpty(),
     validarCampos,
     ]
-    , createSuscription);
+    , createSubcription);
 
-router.get('/:id', validarJWT, getSuscription);
+router.get('/:id', validarJWT, getSubcription);
 
 router.put('/:id', 
     [
@@ -28,8 +28,8 @@ router.put('/:id',
     check('clase', 'El clase es obligatorio.').not().isEmpty(),
     validarCampos,
     ]
-    , updateSuscription);
+    , updateSubcription);
     
-router.delete('/:id', validarJWT, deleteSuscription);
+router.delete('/:id', validarJWT, deleteSubcription);
 
 module.exports = router;
