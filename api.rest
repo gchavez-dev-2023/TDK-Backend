@@ -39,3 +39,64 @@ Content-Type: application/json
     "email": "pedro.h@gmail.com",
     "password": "1234"
 }
+
+### Recuperar los academias
+GET http://localhost:3000/api/academias
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RjMTUzMTI4MDYxYzAyNWM1ZWU5YzgiLCJpYXQiOjE2NzU2NDQ5NzYsImV4cCI6MTY3NTY4ODE3Nn0.6PllQgH1N6kSyHSuF7_CDUXQ7Q35OUohIMzwgtIeSjs
+
+
+### Crear academia
+POST http://localhost:3000/api/academias
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UwNTQ4NjAwMDI3YzczMDdmZmNmM2MiLCJpYXQiOjE2NzU2NDYxMDIsImV4cCI6MTY3NTY4OTMwMn0.sLFjqpID7KqxeeTpkJa5KrbrWPMHbbKaT4QcG0WdOfw
+Content-Type: application/json
+
+{
+    "nombre": "Academia Buin",
+    "direccion": "Condel 789, Buin"
+}
+
+### Recuperar los niveles
+GET http://localhost:3000/api/niveles
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RjMTUzMTI4MDYxYzAyNWM1ZWU5YzgiLCJpYXQiOjE2NzU2NDQ5NzYsImV4cCI6MTY3NTY4ODE3Nn0.6PllQgH1N6kSyHSuF7_CDUXQ7Q35OUohIMzwgtIeSjs
+
+
+### Crear niveles
+POST http://localhost:3000/api/niveles
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UwNTQ4NjAwMDI3YzczMDdmZmNmM2MiLCJpYXQiOjE2NzU2NDYxMDIsImV4cCI6MTY3NTY4OTMwMn0.sLFjqpID7KqxeeTpkJa5KrbrWPMHbbKaT4QcG0WdOfw
+Content-Type: application/json
+
+{
+    "nombre": "Camuflado",
+    "orden": 7
+}
+
+
+### Recuperar los categorias
+GET http://localhost:3000/api/categorias
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RjMTUzMTI4MDYxYzAyNWM1ZWU5YzgiLCJpYXQiOjE2NzU2NDQ5NzYsImV4cCI6MTY3NTY4ODE3Nn0.6PllQgH1N6kSyHSuF7_CDUXQ7Q35OUohIMzwgtIeSjs
+
+
+### Crear categorias
+POST http://localhost:3000/api/categorias
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UwNTQ4NjAwMDI3YzczMDdmZmNmM2MiLCJpYXQiOjE2NzU2NDYxMDIsImV4cCI6MTY3NTY4OTMwMn0.sLFjqpID7KqxeeTpkJa5KrbrWPMHbbKaT4QcG0WdOfw
+Content-Type: application/json
+
+{
+    "nombre": "Warriors",
+    "descripcion": "No artes marciales."
+}
+
+### Recuperar los subcategorias
+GET http://localhost:3000/api/subcategorias
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RjMTUzMTI4MDYxYzAyNWM1ZWU5YzgiLCJpYXQiOjE2NzU2NDQ5NzYsImV4cCI6MTY3NTY4ODE3Nn0.6PllQgH1N6kSyHSuF7_CDUXQ7Q35OUohIMzwgtIeSjs
+
+
+### Crear subcategorias
+POST http://localhost:3000/api/subcategorias
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UwNTQ4NjAwMDI3YzczMDdmZmNmM2MiLCJpYXQiOjE2NzU2NDYxMDIsImV4cCI6MTY3NTY4OTMwMn0.sLFjqpID7KqxeeTpkJa5KrbrWPMHbbKaT4QcG0WdOfw
+Content-Type: application/json
+
+{
+    "nombre": "ExTreme",
+    "descripcion": "Programa para competir Extreme."
+}

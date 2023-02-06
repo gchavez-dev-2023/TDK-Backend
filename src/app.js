@@ -15,7 +15,7 @@ app.use(cors());
 
 //lectura y parseo del Body
 app.use(express.json());
-app.use(express.urlencoded({extends: false}));
+// app.use(express.urlencoded({extends: false}));
 
 //logger peticiones entrantes
 app.use(morgan('dev'));

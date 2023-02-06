@@ -24,8 +24,8 @@ router.get('/:id', validarJWT, getSubcription);
 router.put('/:id', 
     [
     validarJWT,
-    check('cliente', 'El cliente es obligatorio.').not().isEmpty(),
-    check('clase', 'El clase es obligatorio.').not().isEmpty(),
+    check('cliente', 'El Id Cliente debe ser valido.').isMongoId(),
+    check('clase', 'El Id Clase debe ser valido.').isMongoId(),
     validarCampos,
     ]
     , updateSubcription);

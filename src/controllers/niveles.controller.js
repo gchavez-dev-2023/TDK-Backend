@@ -2,17 +2,26 @@ const { response } = require('express');
 const Nivel = require('../models/Nivel');
 
 const getLevels = async (req, res = response) => {
-    const Niveles = await Nivel.find({}, 'nombre direccion');
+    try {
+        const niveles = await Nivel.find({}, 'nombre orden');
 
-    res.json({
-        ok: true,
-        Niveles            
-    });
+        res.json({
+            ok: true,
+            niveles            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createLevel = async (req, res = response) => {
     //Desestructurar el body
-    const {nombre, direccion} = req.body;
+    const {nombre, orden} = req.body;
 
     try {
         //Buscar por nombre = nombre
@@ -26,16 +35,21 @@ const createLevel = async (req, res = response) => {
             });
         }
         
-        //Crear Nivel
-        const Nivel = new Nivel(req.body);
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
 
-        //Guardar nuevo Nivel
-        await Nivel.save();
+        //Crear nivel
+        const nivel = new Nivel({
+            usuario,
+            ...req.body});
 
-        console.log(Nivel);
+        //Guardar nuevo nivel
+        await nivel.save();
+
+        console.log(nivel);
         res.json({
             ok: true,
-            Nivel       
+            nivel       
         });
         
     } catch (error) {
@@ -50,11 +64,11 @@ const createLevel = async (req, res = response) => {
 const getLevel = async (req, res = response) => {
     try{
         //console.log(req.params)
-        const Nivel = await Nivel.findById(req.params.id);
+        const nivel = await Nivel.findById(req.params.id);
         
         res.json({
             ok: true,
-            Nivel            
+            nivel            
         });
         
     } catch (error) {
@@ -99,11 +113,11 @@ const updateLevel = async(req, res = response) => {
             campos.nombre = nombre;
         }
 
-        const NivelActualizado = await Nivel.findByIdAndUpdate(req.params.id, campos);
+        const nivelActualizado = await Nivel.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Nivel: NivelActualizado     
+            nivel: nivelActualizado     
         });
         
     } catch (error) {
@@ -129,7 +143,7 @@ const deleteLevel = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const Nivel = await Nivel.findByIdAndDelete(req.params.id);
+        const nivel = await Nivel.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

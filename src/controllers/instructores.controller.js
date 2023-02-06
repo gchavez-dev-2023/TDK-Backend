@@ -2,12 +2,21 @@ const { response } = require('express');
 const Instructor = require('../models/Instructor');
 
 const getInstructors = async (req, res = response) => {
-    const Instructores = await Instructor.find({}, 'rut nombres apellidos fechaNacimiento telefono');
+    try {
+        const instructores = await Instructor.find({}, 'rut nombres apellidos fechaNacimiento telefono');
 
-    res.json({
-        ok: true,
-        Instructores            
-    });
+        res.json({
+            ok: true,
+            instructores            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createInstructor = async (req, res = response) => {
@@ -26,16 +35,16 @@ const createInstructor = async (req, res = response) => {
             });
         }
         
-        //Crear Instructor
-        const Instructor = new Instructor(req.body);
+        //Crear instructor
+        const instructor = new Instructor(req.body);
 
-        //Guardar nuevo Instructor
-        await Instructor.save();
+        //Guardar nuevo instructor
+        await instructor.save();
 
-        console.log(Instructor);
+        console.log(instructor);
         res.json({
             ok: true,
-            Instructor       
+            instructor       
         });
         
     } catch (error) {
@@ -51,11 +60,11 @@ const createInstructor = async (req, res = response) => {
 const getInstructor = async (req, res = response) => {
     try{
         //console.log(req.params)
-        const Instructor = await Instructor.findById(req.params.id);
+        const instructor = await Instructor.findById(req.params.id);
         
         res.json({
             ok: true,
-            Instructor            
+            instructor            
         });
         
     } catch (error) {
@@ -100,11 +109,11 @@ const updateInstructor = async(req, res = response) => {
             campos.rut = rut;
         }
 
-        const InstructorActualizado = await Instructor.findByIdAndUpdate(req.params.id, campos);
+        const instructorActualizado = await Instructor.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Instructor: InstructorActualizado     
+            instructor: instructorActualizado     
         });
         
     } catch (error) {
@@ -130,7 +139,7 @@ const deleteInstructor = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const Instructor = await Instructor.findByIdAndDelete(req.params.id);
+        const instructor = await Instructor.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

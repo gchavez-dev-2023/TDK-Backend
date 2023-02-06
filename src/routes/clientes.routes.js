@@ -13,7 +13,9 @@ router.get('/', validarJWT, getClients);
 router.post('/', 
     [
     validarJWT,
-    check('nombre', 'El nombre es obligatorio.').not().isEmpty(),
+    check('rut', 'El rut es obligatorio.').not().isEmpty(),
+    check('nombres', 'El nombre es obligatorio.').not().isEmpty(),
+    check('apellidos', 'El apellido es obligatorio.').not().isEmpty(),
     check('password', 'El password es obligatorio.').not().isEmpty(),
     check('email', 'El email es obligatorio.').isEmail(),
     validarCampos,
@@ -25,9 +27,11 @@ router.get('/:id', validarJWT, getClient);
 router.put('/:id', 
     [
     validarJWT,
-    check('nombre', 'El nombre es obligatorio.').not().isEmpty(),
+    check('rut', 'El rut es obligatorio.').not().isEmpty(),
+    check('nombres', 'El nombre es obligatorio.').not().isEmpty(),
+    check('apellidos', 'El apellido es obligatorio.').not().isEmpty(),
+    check('password', 'El password es obligatorio.').not().isEmpty(),
     check('email', 'El email es obligatorio.').isEmail(),
-    check('role', 'El role es obligatorio.').not().isEmpty(),
     validarCampos,
     ]
     , updateClient);

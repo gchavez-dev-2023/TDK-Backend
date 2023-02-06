@@ -5,8 +5,22 @@ const ClaseSchema = new Schema({
     descripcion: {type: String},
     fechaInicio: {type: Date},
     fechaFin: {type: Date},
-    instructor: {type: String}
-});
+    academia: {
+        type: Schema.Types.ObjectId,
+        ref: 'Academia',
+        required: true
+    },
+    instructor: {
+        type: Schema.Types.ObjectId,
+        ref: 'Instructor',
+        required: true
+    },
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',        
+        required: true
+        }
+}, {collection: 'clases'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

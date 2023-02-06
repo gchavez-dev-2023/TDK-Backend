@@ -2,8 +2,13 @@ const {Schema, model} = require('mongoose');
 
 const CategoriaSchema = new Schema({
     nombre: {type: String, required: true, unique: true},
-    descripcion: {type: String}
-});
+    descripcion: {type: String},
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',        
+        required: true
+    }
+}, {collection: 'categorias'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

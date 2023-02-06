@@ -7,7 +7,12 @@ const InstructorSchema = new Schema({
     fechaNacimiento: {type: Date },
     telefono: {type: String },
     img: {type: String},
-});
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',        
+        required: true
+    }
+}, {collection: 'instructores'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

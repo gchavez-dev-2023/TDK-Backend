@@ -2,12 +2,21 @@ const { response } = require('express');
 const Cliente = require('../models/Cliente');
 
 const getClients = async (req, res = response) => {
-    const Clientes = await Cliente.find({}, 'rut nombres apellidos fechaNacimiento telefono');
+    try {
+        const clientes = await Cliente.find({}, 'rut nombres apellidos fechaNacimiento telefono');
 
-    res.json({
-        ok: true,
-        Clientes            
-    });
+        res.json({
+            ok: true,
+            clientes            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createClient = async (req, res = response) => {
@@ -26,16 +35,16 @@ const createClient = async (req, res = response) => {
             });
         }
         
-        //Crear Cliente
-        const Cliente = new Cliente(req.body);
+        //Crear cliente
+        const cliente = new Cliente(req.body);
 
         //Guardar nuevo Cliente
-        await Cliente.save();
+        await cliente.save();
 
-        console.log(Cliente);
+        console.log(cliente);
         res.json({
             ok: true,
-            Cliente       
+            cliente       
         });
         
     } catch (error) {
@@ -51,11 +60,11 @@ const createClient = async (req, res = response) => {
 const getClient = async (req, res = response) => {
     try{
         //console.log(req.params)
-        const Cliente = await Cliente.findById(req.params.id);
+        const cliente = await Cliente.findById(req.params.id);
         
         res.json({
             ok: true,
-            Cliente            
+            cliente            
         });
         
     } catch (error) {
@@ -100,11 +109,11 @@ const updateClient = async(req, res = response) => {
             campos.rut = rut;
         }
 
-        const ClienteActualizado = await Cliente.findByIdAndUpdate(req.params.id, campos);
+        const clienteActualizado = await Cliente.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Cliente: ClienteActualizado     
+            cliente: clienteActualizado     
         });
         
     } catch (error) {
@@ -130,7 +139,7 @@ const deleteClient = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const Cliente = await Cliente.findByIdAndDelete(req.params.id);
+        const cliente = await Cliente.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

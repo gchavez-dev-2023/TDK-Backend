@@ -7,6 +7,11 @@ const EmpleadoSchema = new Schema({
     fechaNacimiento: {type: Date },
     telefono: {type: String },
     img: {type: String},
-});
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',        
+        required: true
+    }
+}, {collection: 'empleados'});
 
 module.exports = model('Empleado', EmpleadoSchema);

@@ -1,10 +1,23 @@
 const {Schema, model} = require('mongoose');
 
 const SuscripcionSchema = new Schema({
-    cliente: {type: String, required: true},
-    clase: {type: String, required: true},
-    fechaSuscripcion: {type: String}
-});
+    cliente: {
+        type: Schema.Types.ObjectId,
+        ref: 'Cliente',        
+        required: true
+    },
+    clase: {
+        type: Schema.Types.ObjectId,
+        ref: 'Clase',        
+        required: true
+    },
+    fechaSuscripcion: {type: String},
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',        
+        required: true
+    }
+}, {collection: 'suscripciones'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

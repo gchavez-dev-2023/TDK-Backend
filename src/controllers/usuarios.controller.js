@@ -3,12 +3,21 @@ const { response } = require('express');
 const Usuario = require('../models/Usuario');
 
 const getUsers = async (req, res = response) => {
-    const usuarios = await Usuario.find({}, 'nombre email role google ');
+    try {
+        const usuarios = await Usuario.find({}, 'nombre email role google ');
 
-    res.json({
-        ok: true,
-        usuarios            
-    });
+        res.json({
+            ok: true,
+            usuarios            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createUser = async (req, res = response) => {

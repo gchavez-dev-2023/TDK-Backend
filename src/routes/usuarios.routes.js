@@ -8,14 +8,15 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 //CRUD
 // create - read - update - delete
 
-router.get('/', validarJWT, getUsers);
+router.get('/' //, validarJWT
+, getUsers);
 
 router.post('/', 
     [
-    validarJWT,
+    //validarJWT,
     check('nombre', 'El nombre es obligatorio.').not().isEmpty(),
-    check('password', 'El password es obligatorio.').not().isEmpty(),
     check('email', 'El email es obligatorio.').isEmail(),
+    check('password', 'El password es obligatorio.').not().isEmpty(),
     validarCampos,
     ]
     , createUser);

@@ -2,12 +2,21 @@ const { response } = require('express');
 const Empleado = require('../models/Empleado');
 
 const getEmployees = async (req, res = response) => {
-    const Empleados = await Empleado.find({}, 'rut nombres apellidos fechaNacimiento telefono');
-    
-    res.json({
-        ok: true,
-        Empleados            
-    });
+    try {
+        const empleados = await Empleado.find({}, 'rut nombres apellidos fechaNacimiento telefono');
+        
+        res.json({
+            ok: true,
+            empleados            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createEmployee = async (req, res = response) => {
@@ -26,16 +35,16 @@ const createEmployee = async (req, res = response) => {
             });
         }
         
-        //Crear Empleado
-        const Empleado = new Empleado(req.body);
+        //Crear empleado
+        const empleado = new Empleado(req.body);
 
-        //Guardar nuevo Empleado
-        await Empleado.save();
+        //Guardar nuevo empleado
+        await empleado.save();
 
-        console.log(Empleado);
+        console.log(empleado);
         res.json({
             ok: true,
-            Empleado       
+            empleado       
         });
         
     } catch (error) {
@@ -51,11 +60,11 @@ const createEmployee = async (req, res = response) => {
 const getEmployee = async (req, res = response) => {
     try {
         //console.log(req.params)
-        const Empleado = await Empleado.findById(req.params.id);
+        const empleado = await Empleado.findById(req.params.id);
         
         res.json({
             ok: true,
-            Empleado            
+            empleado            
         });
         
     } catch (error) {
@@ -101,11 +110,11 @@ const updateEmployee = async(req, res = response) => {
             campos.rut = rut;
         }
 
-        const EmpleadoActualizado = await Empleado.findByIdAndUpdate(req.params.id, campos);
+        const empleadoActualizado = await Empleado.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Empleado: EmpleadoActualizado     
+            empleado: empleadoActualizado     
         });
         
     } catch (error) {
@@ -131,7 +140,7 @@ const deleteEmployee = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const Empleado = await Empleado.findByIdAndDelete(req.params.id);
+        const empleado = await Empleado.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

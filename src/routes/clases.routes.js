@@ -14,6 +14,8 @@ router.post('/',
     [
     validarJWT,
     check('nombre', 'El nombre es obligatorio.').not().isEmpty(),
+    check('academia', 'El Id Academia debe ser valido.').isMongoId(),
+    check('instructor', 'El Id Instructor debe ser valido.').isMongoId(),
     validarCampos,
     ]
     , createClass);

@@ -2,12 +2,21 @@ const { response } = require('express');
 const Clase = require('../models/Clase');
 
 const getClasses = async (req, res = response) => {
-    const Clases = await Clase.find({}, 'nombre descripcion fechaInicio fechaFin');
+    try{
+        const clases = await Clase.find({}, 'nombre descripcion fechaInicio fechaFin usuario').populate('usuario', 'nombre');
 
-    res.json({
-        ok: true,
-        Clases            
-    });
+        res.json({
+            ok: true,
+            clases            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createClass = async (req, res = response) => {
@@ -26,16 +35,21 @@ const createClass = async (req, res = response) => {
             });
         }
         
-        //Crear Clase
-        const Clase = new Clase(req.body);
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
 
-        //Guardar nuevo Clase
-        await Clase.save();
+        //Crear clase
+        const clase = new Clase({
+            usuario,
+            ...req.body});
 
-        console.log(Clase);
+        //Guardar nuevo clase
+        await clase.save();
+
+        console.log(clase);
         res.json({
             ok: true,
-            Clase       
+            clase       
         });
         
     } catch (error) {
@@ -50,11 +64,11 @@ const createClass = async (req, res = response) => {
 const getClass = async (req, res = response) => {
     try {
         //console.log(req.params)
-        const Clase = await Clase.findById(req.params.id);
+        const clase = await Clase.findById(req.params.id);
         
         res.json({
             ok: true,
-            Clase            
+            clase            
         });
         
     } catch (error) {
@@ -99,11 +113,11 @@ const updateClass = async(req, res = response) => {
             campos.nombre = nombre;
         }
 
-        const ClaseActualizado = await Clase.findByIdAndUpdate(req.params.id, campos);
+        const claseActualizado = await Clase.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Clase: ClaseActualizado     
+            clase: claseActualizado     
         });
         
     } catch (error) {
@@ -129,7 +143,7 @@ const deleteClass = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const Clase = await Clase.findByIdAndDelete(req.params.id);
+        const clase = await Clase.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

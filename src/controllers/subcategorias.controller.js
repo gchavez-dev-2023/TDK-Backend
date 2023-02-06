@@ -2,12 +2,21 @@ const { response } = require('express');
 const SubCategoria = require('../models/SubCategoria');
 
 const getSubCategories = async (req, res = response) => {
-    const SubCategorias = await SubCategoria.find({}, 'nombre descripcion');
+    try {
+        const subCategorias = await SubCategoria.find({}, 'nombre descripcion');
 
-    res.json({
-        ok: true,
-        SubCategorias            
-    });
+        res.json({
+            ok: true,
+            subCategorias            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createSubCategory = async (req, res = response) => {
@@ -26,16 +35,21 @@ const createSubCategory = async (req, res = response) => {
             });
         }
         
-        //Crear SubCategoria
-        const SubCategoria = new SubCategoria(req.body);
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
 
-        //Guardar nuevo SubCategoria
-        await SubCategoria.save();
+        //Crear subCategoria
+        const subCategoria = new SubCategoria({
+            usuario,
+            ...req.body});
 
-        console.log(SubCategoria);
+        //Guardar nuevo subCategoria
+        await subCategoria.save();
+
+        console.log(subCategoria);
         res.json({
             ok: true,
-            SubCategoria       
+            subCategoria       
         });
         
     } catch (error) {
@@ -50,11 +64,11 @@ const createSubCategory = async (req, res = response) => {
 const getSubCategory = async (req, res = response) => {
     try {
         //console.log(req.params)
-        const SubCategoria = await SubCategoria.findById(req.params.id);
+        const subCategoria = await SubCategoria.findById(req.params.id);
         
         res.json({
             ok: true,
-            SubCategoria            
+            subCategoria            
         });
         
     } catch (error) {
@@ -99,11 +113,11 @@ const updateSubCategory = async(req, res = response) => {
             campos.nombre = nombre;
         }
 
-        const SubCategoriaActualizado = await SubCategoria.findByIdAndUpdate(req.params.id, campos);
+        const subCategoriaActualizado = await SubCategoria.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            SubCategoria: SubCategoriaActualizado     
+            subCategoria: subCategoriaActualizado     
         });
         
     } catch (error) {
@@ -129,7 +143,7 @@ const deleteSubCategory = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const SubCategoria = await SubCategoria.findByIdAndDelete(req.params.id);
+        const subCategoria = await SubCategoria.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

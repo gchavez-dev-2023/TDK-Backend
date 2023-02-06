@@ -2,12 +2,21 @@ const { response } = require('express');
 const Suscripcion = require('../models/Suscripcion');
 
 const getSubcriptions = async (req, res = response) => {
-    const Suscripciones = await Suscripcion.find({}, 'cliente clase fechaSuscripcion');
+    try {
+        const suscripciones = await Suscripcion.find({}, 'cliente clase fechaSuscripcion');
 
-    res.json({
-        ok: true,
-        Suscripciones            
-    });
+        res.json({
+            ok: true,
+            suscripciones            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createSubcription = async (req, res = response) => {
@@ -26,16 +35,21 @@ const createSubcription = async (req, res = response) => {
             });
         }
         
-        //Crear Suscripcion
-        const Suscripcion = new Suscripcion(req.body);
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
 
-        //Guardar nuevo Suscripcion
-        await Suscripcion.save();
+        //Crear suscripcion
+        const suscripcion = new Suscripcion({
+            usuario,
+            ...req.body});
 
-        console.log(Suscripcion);
+        //Guardar nuevo suscripcion
+        await suscripcion.save();
+
+        console.log(suscripcion);
         res.json({
             ok: true,
-            Suscripcion       
+            suscripcion       
         });
         
     } catch (error) {
@@ -50,11 +64,11 @@ const createSubcription = async (req, res = response) => {
 const getSubcription = async (req, res = response) => {
     try {
         //console.log(req.params)
-        const Suscripcion = await Suscripcion.findById(req.params.id);
+        const suscripcion = await Suscripcion.findById(req.params.id);
         
         res.json({
             ok: true,
-            Suscripcion            
+            suscripcion            
         });    
     } catch (error) {
         console.log(error);
@@ -99,11 +113,11 @@ const updateSubcription = async(req, res = response) => {
             campos.clase = clase;
         }
 
-        const SuscripcionActualizado = await Suscripcion.findByIdAndUpdate(req.params.id, campos);
+        const suscripcionActualizado = await Suscripcion.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Suscripcion: SuscripcionActualizado     
+            suscripcion: suscripcionActualizado     
         });
         
     } catch (error) {
@@ -129,7 +143,7 @@ const deleteSubcription = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const Suscripcion = await Suscripcion.findByIdAndDelete(req.params.id);
+        const suscripcion = await Suscripcion.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

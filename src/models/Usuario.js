@@ -7,7 +7,7 @@ const UsuarioSchema = new Schema({
     img: {type: String},
     rol: {type: String, required: true, default: 'USER_ROLE'},
     google: {type: Boolean, default: false},
-});
+}, {collection: 'usuarios'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

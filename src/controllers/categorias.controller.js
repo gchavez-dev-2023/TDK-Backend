@@ -2,12 +2,21 @@ const { response } = require('express');
 const Categoria = require('../models/Categoria');
 
 const getCategories = async (req, res = response) => {
-    const Categorias = await Categoria.find({}, 'nombre descripcion');
+    try{
+        const categorias = await Categoria.find({}, 'nombre descripcion usuario').populate('usuario', 'nombre');
 
-    res.json({
-        ok: true,
-        Categorias            
-    });
+        res.json({
+            ok: true,
+            categorias            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createCategory = async (req, res = response) => {
@@ -26,16 +35,21 @@ const createCategory = async (req, res = response) => {
             });
         }
         
-        //Crear Categoria
-        const Categoria = new Categoria(req.body);
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
 
-        //Guardar nuevo Categoria
-        await Categoria.save();
+        //Crear categoria
+        const categoria = new Categoria({
+            usuario,
+            ...req.body});
 
-        console.log(Categoria);
+        //Guardar nuevo categoria
+        await categoria.save();
+
+        console.log(categoria);
         res.json({
             ok: true,
-            Categoria       
+            categoria       
         });
         
     } catch (error) {
@@ -50,11 +64,11 @@ const createCategory = async (req, res = response) => {
 const getCategory = async (req, res = response) => {
     try {
         //console.log(req.params)
-        const Categoria = await Categoria.findById(req.params.id);
+        const categoria = await Categoria.findById(req.params.id).populate('usuario', 'nombre');
         
         res.json({
             ok: true,
-            Categoria            
+            categoria            
         });
         
     } catch (error) {
@@ -99,11 +113,11 @@ const updateCategory = async(req, res = response) => {
             campos.nombre = nombre;
         }
 
-        const CategoriaActualizado = await Categoria.findByIdAndUpdate(req.params.id, campos);
+        const categoriaActualizado = await Categoria.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Categoria: CategoriaActualizado     
+            categoria: categoriaActualizado     
         });
         
     } catch (error) {
@@ -129,7 +143,7 @@ const deleteCategory = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const Categoria = await Categoria.findByIdAndDelete(req.params.id);
+        const categoria = await Categoria.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

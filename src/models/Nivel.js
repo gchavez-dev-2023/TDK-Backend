@@ -2,8 +2,13 @@ const {Schema, model} = require('mongoose');
 
 const NivelSchema = new Schema({
     nombre: {type: String, required: true},
-    descripcion: {type: String}
-});
+    orden: {type: Number},
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',        
+        required: true
+    }
+}, {collection: 'niveles'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

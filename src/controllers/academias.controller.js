@@ -2,21 +2,32 @@ const { response } = require('express');
 const Academia = require('../models/Academia');
 
 const getAcademies = async (req, res = response) => {
-    const Academias = await Academia.find({}, 'nombre direccion');
+    try{
+        const academias = await Academia.find({}, 'nombre direccion usuario').populate('usuario', 'nombre');
 
-    res.json({
-        ok: true,
-        Academias            
-    });
+        res.json({
+            ok: true,
+            academias            
+        });
+            
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const createAcademy = async (req, res = response) => {
     //Desestructurar el body
     const {nombre, direccion} = req.body;
+    
 
     try {
         //Buscar por nombre = nombre
         const existeNombre = await Academia.findOne({ nombre });
+        
 
         //Si existe nombre enviar error
         if ( existeNombre ) {
@@ -26,16 +37,21 @@ const createAcademy = async (req, res = response) => {
             });
         }
         
-        //Crear Academia
-        const Academia = new Academia(req.body);
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
+
+        //Crear academia
+        const academia = new Academia({
+            usuario,
+            ...req.body});
 
         //Guardar nuevo Academia
-        await Academia.save();
+        await academia.save();
 
-        console.log(Academia);
+        console.log(academia);
         res.json({
             ok: true,
-            Academia       
+            academia       
         });
         
     } catch (error) {
@@ -48,9 +64,22 @@ const createAcademy = async (req, res = response) => {
 }
 
 const getAcademy = async (req, res = response) => {
-    //console.log(req.params)
-    const Academia = await Academia.findById(req.params.id);
-    res.send(Academia);
+    try {
+        //console.log(req.params)
+        const academia = await Academia.findById(req.params.id).populate('usuario', 'nombre');
+        
+        res.json({
+            ok: true,
+            academia            
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
 }
 
 const updateAcademy = async(req, res = response) => {
@@ -86,11 +115,11 @@ const updateAcademy = async(req, res = response) => {
             campos.nombre = nombre;
         }
 
-        const AcademiaActualizado = await Academia.findByIdAndUpdate(req.params.id, campos);
+        const academiaActualizado = await Academia.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            Academia: AcademiaActualizado     
+            academia: academiaActualizado     
         });
         
     } catch (error) {
@@ -116,7 +145,7 @@ const deleteAcademy = async (req, res = response) => {
         }
 
         //console.log(req.params)
-        const Academia = await Academia.findByIdAndDelete(req.params.id);
+        const academia = await Academia.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,

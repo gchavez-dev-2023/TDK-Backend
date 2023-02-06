@@ -2,8 +2,13 @@ const {Schema, model} = require('mongoose');
 
 const AcademiaSchema = new Schema({
     nombre: {type: String, required: true, unique: true},
-    direccion: {type: String}
-});
+    direccion: {type: String},
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',        
+        required: true
+    }
+}, {collection: 'academias'} );
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*
