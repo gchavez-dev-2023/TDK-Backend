@@ -13,6 +13,9 @@ app.set('port', process.env.PORT || 3000);
 //configurar cors
 app.use(cors());
 
+//carpeta publica, servir html
+app.use( express.static('public'));
+
 //lectura y parseo del Body
 app.use(express.json());
 // app.use(express.urlencoded({extends: false}));

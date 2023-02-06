@@ -175,19 +175,27 @@ Content-Type: application/json
 
 
 ### Subir Imagen Instructor
-PUT http://localhost:3000/api/uploads/instructores/63e147d1eeddb13aba2964a5
+PUT http://localhost:3000/api/uploads/instructores/63e12ae26e0777ece296a1ba
 x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UwNTQ4NjAwMDI3YzczMDdmZmNmM2MiLCJpYXQiOjE2NzU3MDgxNjIsImV4cCI6MTY3NTc1MTM2Mn0.jTd6UazO04PAl7yzfIkg5tjVdZXCSrMefreyDqYsObM
 Content-Type: multipart/form-data; boundary=MfnBoundry
 
 --MfnBoundry
-Content-Disposition: form-data; name="image"; filename="OIP.jpg"
-Content-Type: image
+Content-Disposition: form-data; name="image"; filename="OIP.png"
+Content-Type: image/*
 
-< C:\Users\gg_ch\Pictures\OIP.jpg
+< C:\Users\gchavez\Pictures\OIP.png
 --MfnBoundry--
 
 
 ### Mostrar Imagen Instructor
-GET http://localhost:3000/api/uploads/instructores/f5f01cf4-998d-4034-ba1f-4f1c4c89b925.jpg
+GET http://localhost:3000/api/uploads/instructores/df6240f7-f86b-437c-a2c4-52d3fced2482.png
 
+
+### Mostrar Imagen Instructor
+POST http://localhost:3000/api/login/google/
+Content-Type: application/json
+
+{
+    "token": "123"
+}
 

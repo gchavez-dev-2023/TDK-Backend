@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require ('path');
 const { response } = require ('express');
 const { v4: uuidv4 } = require('uuid');
@@ -46,7 +47,7 @@ const fileUpload = async(req, res = response ) => {
 
         //Path para guardar archivo
         const pathImg = path.join( __dirname, `../uploads/${ tipo }/${ nombreArchivo }`);
-        console.log(pathImg)
+        //console.log(pathImg)
 
         //Mover la imagen recuperada al Path
         file.mv( pathImg, (err) => {
@@ -85,9 +86,14 @@ const returnImage = (req, res = response) => {
 
     const pathImg = path.join( __dirname, `../uploads/${ tipo }/${ imagen }`);
 
-    console.log(pathImg);
+    //console.log(pathImg);
+    if (fs.existsSync( pathImg )){
+        res.sendFile( pathImg );
+    }else{
+        const pathNoImg = path.join( __dirname, `../uploads/no-imagen-available.jpg`);
+        res.sendFile( pathNoImg );
+    }
 
-    res.sendFile( pathImg );
 }
 
 module.exports = {

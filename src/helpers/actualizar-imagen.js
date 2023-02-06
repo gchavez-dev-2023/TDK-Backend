@@ -1,14 +1,16 @@
 const fs = require('fs');
+const path = require ('path');
 
 const Cliente = require('../models/Cliente');
 const Empleado = require('../models/Empleado');
 const Instructor = require('../models/Instructor');
 
-const borrarImagen = ( path ) => {
+const borrarImagen = ( pathImg ) => {
+    //console.log(pathImg);
     //Verificar si existe imagen anterior y borrar el archivo
-    if ( fs.existsSync(path) ){
+    if ( fs.existsSync(pathImg) ){
         // borrar la imagen anterior
-        fs.unlinkSync(path);
+        fs.unlinkSync(pathImg);
     }
 }
 
@@ -25,7 +27,7 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
             }
 
             //Verificar si existe imagen anterior y borrar el archivo
-            pathViejo = `.uploads/clientes/${ cliente.img }`;
+            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ cliente.img }`);
             borrarImagen(pathViejo);
 
             cliente.img = nombreArchivo;
@@ -42,7 +44,7 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
             }
 
             //Verificar si existe imagen anterior y borrar el archivo
-            pathViejo = `.uploads/empleados/${ empleado.img }`;
+            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ empleado.img }`);
             borrarImagen(pathViejo);
 
             empleado.img = nombreArchivo;
@@ -58,7 +60,8 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
             }
 
             //Verificar si existe imagen anterior y borrar el archivo
-            pathViejo = `.uploads/instructores/${ instructor.img }`;
+            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ instructor.img }`);
+            
             borrarImagen(pathViejo);
 
             instructor.img = nombreArchivo;
