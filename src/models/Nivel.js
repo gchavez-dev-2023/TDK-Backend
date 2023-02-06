@@ -3,6 +3,7 @@ const {Schema, model} = require('mongoose');
 const NivelSchema = new Schema({
     nombre: {type: String, required: true},
     orden: {type: Number},
+    img: {type: String},
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',        

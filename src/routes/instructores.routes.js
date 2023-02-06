@@ -16,8 +16,6 @@ router.post('/',
     check('rut', 'El rut es obligatorio.').not().isEmpty(),
     check('nombres', 'El nombre es obligatorio.').not().isEmpty(),
     check('apellidos', 'El apellido es obligatorio.').not().isEmpty(),
-    check('password', 'El password es obligatorio.').not().isEmpty(),
-    check('email', 'El email es obligatorio.').isEmail(),
     validarCampos,
     ]
     , createInstructor);
@@ -30,8 +28,6 @@ router.put('/:id',
     check('rut', 'El rut es obligatorio.').not().isEmpty(),
     check('nombres', 'El nombre es obligatorio.').not().isEmpty(),
     check('apellidos', 'El apellido es obligatorio.').not().isEmpty(),
-    check('password', 'El password es obligatorio.').not().isEmpty(),
-    check('email', 'El email es obligatorio.').isEmail(),
     validarCampos,
     ]
     , updateInstructor);

@@ -3,7 +3,7 @@ const Empleado = require('../models/Empleado');
 
 const getEmployees = async (req, res = response) => {
     try {
-        const empleados = await Empleado.find({}, 'rut nombres apellidos fechaNacimiento telefono');
+        const empleados = await Empleado.find({}, 'rut nombres apellidos fechaNacimiento telefono img');
         
         res.json({
             ok: true,
@@ -35,8 +35,13 @@ const createEmployee = async (req, res = response) => {
             });
         }
         
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
+
         //Crear empleado
-        const empleado = new Empleado(req.body);
+        const empleado = new Empleado({
+            usuario,
+            ...req.body});
 
         //Guardar nuevo empleado
         await empleado.save();

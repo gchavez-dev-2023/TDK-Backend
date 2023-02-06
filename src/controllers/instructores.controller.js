@@ -3,7 +3,7 @@ const Instructor = require('../models/Instructor');
 
 const getInstructors = async (req, res = response) => {
     try {
-        const instructores = await Instructor.find({}, 'rut nombres apellidos fechaNacimiento telefono');
+        const instructores = await Instructor.find({}, 'rut nombres apellidos fechaNacimiento telefono img');
 
         res.json({
             ok: true,
@@ -35,8 +35,13 @@ const createInstructor = async (req, res = response) => {
             });
         }
         
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
+
         //Crear instructor
-        const instructor = new Instructor(req.body);
+        const instructor = new Instructor({
+            usuario,
+            ...req.body});
 
         //Guardar nuevo instructor
         await instructor.save();

@@ -3,6 +3,7 @@ const {Schema, model} = require('mongoose');
 const SubCategoriaSchema = new Schema({
     nombre: {type: String, required: true},
     descripcion: {type: String},
+    img: {type: String},
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',        

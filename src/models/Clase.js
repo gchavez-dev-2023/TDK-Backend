@@ -5,6 +5,7 @@ const ClaseSchema = new Schema({
     descripcion: {type: String},
     fechaInicio: {type: Date},
     fechaFin: {type: Date},
+    img: {type: String},
     academia: {
         type: Schema.Types.ObjectId,
         ref: 'Academia',

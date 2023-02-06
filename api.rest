@@ -100,3 +100,88 @@ Content-Type: application/json
     "nombre": "ExTreme",
     "descripcion": "Programa para competir Extreme."
 }
+
+### Recuperar los Clientes
+GET http://localhost:3000/api/clientes
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UxMjZlNDgyOTI1NzcyYzM1MWMzZTQiLCJpYXQiOjE2NzU2OTk5ODMsImV4cCI6MTY3NTc0MzE4M30.gTXfuHvv2QvDQ4dOTU7MD3oKySQNQCPRwUSkDkshjiU
+
+
+### Crear Cliente
+POST http://localhost:3000/api/clientes
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UxMjZlNDgyOTI1NzcyYzM1MWMzZTQiLCJpYXQiOjE2NzU2OTk5ODMsImV4cCI6MTY3NTc0MzE4M30.gTXfuHvv2QvDQ4dOTU7MD3oKySQNQCPRwUSkDkshjiU
+Content-Type: application/json
+
+{
+    "rut": "1234",
+    "nombres": "pedro",
+    "apellidos": "gomez"
+}
+
+### Subir Imagen Cliente
+PUT http://localhost:3000/api/uploads/clientes/63e1296e53a602b8a3fcc4ee
+Content-Type: multipart/form-data; boundary=MfnBoundry
+
+--MfnBoundry
+Content-Disposition: form-data; name="image"; filename="MeLlamoPacPat.png"
+Content-Type: image/png
+
+< C:\Users\gchavez\Pictures\MeLlamoPacPat.png
+--MfnBoundry--
+
+### Recuperar los Empleados
+GET http://localhost:3000/api/empleados
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UxMjZlNDgyOTI1NzcyYzM1MWMzZTQiLCJpYXQiOjE2NzU2OTk5ODMsImV4cCI6MTY3NTc0MzE4M30.gTXfuHvv2QvDQ4dOTU7MD3oKySQNQCPRwUSkDkshjiU
+
+
+### Crear Empleado
+POST http://localhost:3000/api/empleados
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UxMjZlNDgyOTI1NzcyYzM1MWMzZTQiLCJpYXQiOjE2NzU2OTk5ODMsImV4cCI6MTY3NTc0MzE4M30.gTXfuHvv2QvDQ4dOTU7MD3oKySQNQCPRwUSkDkshjiU
+Content-Type: application/json
+
+{
+    "rut": "1234",
+    "nombres": "pedro",
+    "apellidos": "gomez"
+}
+
+
+### Subir Imagen Empleado
+PUT http://localhost:3000/api/uploads/empleados/63e12a566e0777ece296a1b3
+Content-Type: multipart/form-data; boundary=MfnBoundry
+
+--MfnBoundry
+Content-Disposition: form-data; name="image"; filename="MeLlamoPacPat.png"
+Content-Type: image/png
+
+< C:\Users\gchavez\Pictures\MeLlamoPacPat.png
+--MfnBoundry--
+
+
+### Recuperar los Instructores
+GET http://localhost:3000/api/instructores
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UxMjZlNDgyOTI1NzcyYzM1MWMzZTQiLCJpYXQiOjE2NzU2OTk5ODMsImV4cCI6MTY3NTc0MzE4M30.gTXfuHvv2QvDQ4dOTU7MD3oKySQNQCPRwUSkDkshjiU
+
+
+### Crear Instructor
+POST http://localhost:3000/api/instructores
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UxMjZlNDgyOTI1NzcyYzM1MWMzZTQiLCJpYXQiOjE2NzU2OTk5ODMsImV4cCI6MTY3NTc0MzE4M30.gTXfuHvv2QvDQ4dOTU7MD3oKySQNQCPRwUSkDkshjiU
+Content-Type: application/json
+
+{
+    "rut": "1234",
+    "nombres": "pedro",
+    "apellidos": "gomez"
+}
+
+
+### Subir Imagen Instructor
+PUT http://localhost:3000/api/uploads/instructores/63e12ae26e0777ece296a1ba
+Content-Type: multipart/form-data; boundary=MfnBoundry
+
+--MfnBoundry
+Content-Disposition: form-data; name="image"; filename="MeLlamoPacPat.png"
+Content-Type: image/png
+
+< C:\Users\gchavez\Pictures\MeLlamoPacPat.png
+--MfnBoundry--
+

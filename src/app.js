@@ -34,6 +34,9 @@ app.use('/api/clases', require('./routes/clases.routes'));
 
 app.use('/api/suscripciones', require('./routes/suscripciones.routes'));
 
+app.use('/api/busquedas', require('./routes/busquedas.routes'));
+app.use('/api/uploads', require('./routes/uploads.routes'));
+
 app.use('/api/login', require('./routes/auth.routes'));
 
 module.exports = app;

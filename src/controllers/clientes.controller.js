@@ -3,7 +3,7 @@ const Cliente = require('../models/Cliente');
 
 const getClients = async (req, res = response) => {
     try {
-        const clientes = await Cliente.find({}, 'rut nombres apellidos fechaNacimiento telefono');
+        const clientes = await Cliente.find({}, 'rut nombres apellidos fechaNacimiento telefono img');
 
         res.json({
             ok: true,
@@ -35,8 +35,13 @@ const createClient = async (req, res = response) => {
             });
         }
         
+        //Obtener el ID del usuario desde el token
+        const usuario = req._id;
+
         //Crear cliente
-        const cliente = new Cliente(req.body);
+        const cliente = new Cliente({
+            usuario,
+            ...req.body});
 
         //Guardar nuevo Cliente
         await cliente.save();
