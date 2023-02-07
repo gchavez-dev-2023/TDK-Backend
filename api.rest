@@ -199,3 +199,7 @@ Content-Type: application/json
     "token": "123"
 }
 
+
+### Renovar token
+GET http://localhost:3000/api/login/renew
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UxMjZlNDgyOTI1NzcyYzM1MWMzZTQiLCJpYXQiOjE2NzU3ODQyMzYsImV4cCI6MTY3NTgyNzQzNn0.GutsNIjLHXUeLi-Ca9f8PV3pwWRIsBI6WyZLH_0ubLc

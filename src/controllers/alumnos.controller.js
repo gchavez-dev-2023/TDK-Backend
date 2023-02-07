@@ -1,13 +1,13 @@
 const { response } = require('express');
-const Cliente = require('../models/Cliente');
+const Alumno = require('../models/Alumno');
 
-const getClients = async (req, res = response) => {
+const getTrainees = async (req, res = response) => {
     try {
-        const clientes = await Cliente.find({}, 'rut nombres apellidos fechaNacimiento telefono img');
+        const alumnos = await Alumno.find({}, 'rut nombres apellidos fechaNacimiento telefono img');
 
         res.json({
             ok: true,
-            clientes            
+            alumnos            
         });
         
     } catch (error) {
@@ -19,13 +19,13 @@ const getClients = async (req, res = response) => {
     }
 }
 
-const createClient = async (req, res = response) => {
+const createTrainee = async (req, res = response) => {
     //Desestructurar el body
     const {rut, nombres, apellidos, fechaNacimiento, telefono} = req.body;
 
     try {
         //Buscar por rut = rut
-        const existeRut = await Cliente.findOne({ rut });
+        const existeRut = await Alumno.findOne({ rut });
 
         //Si existe rut enviar error
         if ( existeRut ) {
@@ -38,18 +38,18 @@ const createClient = async (req, res = response) => {
         //Obtener el ID del usuario desde el token
         const usuario = req._id;
 
-        //Crear cliente
-        const cliente = new Cliente({
+        //Crear alumno
+        const alumno = new Alumno({
             usuario,
             ...req.body});
 
-        //Guardar nuevo Cliente
-        await cliente.save();
+        //Guardar nuevo alumno
+        await alumno.save();
 
-        console.log(cliente);
+        console.log(alumno);
         res.json({
             ok: true,
-            cliente       
+            alumno       
         });
         
     } catch (error) {
@@ -62,14 +62,14 @@ const createClient = async (req, res = response) => {
 
 }
 
-const getClient = async (req, res = response) => {
+const getTrainee = async (req, res = response) => {
     try{
         //console.log(req.params)
-        const cliente = await Cliente.findById(req.params.id);
+        const alumno = await Alumno.findById(req.params.id);
         
         res.json({
             ok: true,
-            cliente            
+            alumno            
         });
         
     } catch (error) {
@@ -81,27 +81,27 @@ const getClient = async (req, res = response) => {
     }
 }
 
-const updateClient = async(req, res = response) => {
+const updateTrainee = async(req, res = response) => {
     //Desestructurar campos enviados desde la peticion
     const {rut, ...campos } = req.body;
 
     //console.log(req.params)
     try {
         //Buscar por BY = ID
-        const existeDB = await Cliente.findById(req.params.id);
+        const existeDB = await Alumno.findById(req.params.id);
 
-        //Si no existe Cliente enviar error
+        //Si no existe alumno enviar error
         if ( !existeDB ) {
             return res.status(404).json({
                 ok: false,
-                msg: 'No existe Cliente por el ID.'
+                msg: 'No existe alumno por el ID.'
             });
         }
 
-        //Verificar si email ya no es igual a del Cliente en la BD
+        //Verificar si email ya no es igual a del alumno en la BD
         if (existeDB.rut !== rut){
             //Verificar si el email nuevo ya se encuentra registrado
-            const existeRut = await Cliente.findOne({rut});
+            const existeRut = await Alumno.findOne({rut});
 
             //Si existe se responde error
             if (existeRut){
@@ -114,11 +114,11 @@ const updateClient = async(req, res = response) => {
             campos.rut = rut;
         }
 
-        const clienteActualizado = await Cliente.findByIdAndUpdate(req.params.id, campos);
+        const alumnoActualizado = await Alumno.findByIdAndUpdate(req.params.id, campos);
 
         res.json({
             ok: true,
-            cliente: clienteActualizado     
+            alumno: alumnoActualizado     
         });
         
     } catch (error) {
@@ -130,21 +130,21 @@ const updateClient = async(req, res = response) => {
     }
 }
 
-const deleteClient = async (req, res = response) => {
+const deleteTrainee = async (req, res = response) => {
     try {
         //Buscar por BY = ID
-        const existeDB = await Cliente.findById(req.params.id);
+        const existeDB = await Alumno.findById(req.params.id);
 
-        //Si no existe Cliente enviar error
+        //Si no existe alumno enviar error
         if ( !existeDB ) {
             return res.status(404).json({
                 ok: false,
-                msg: 'No existe Cliente por el ID.'
+                msg: 'No existe alumno por el ID.'
             });
         }
 
         //console.log(req.params)
-        const cliente = await Cliente.findByIdAndDelete(req.params.id);
+        const alumno = await Alumno.findByIdAndDelete(req.params.id);
         
         res.json({
             ok: true,
@@ -161,9 +161,9 @@ const deleteClient = async (req, res = response) => {
 }
 
 module.exports = {
-    getClients,
-    createClient,
-    getClient,
-    updateClient,
-    deleteClient
+    getTrainees,
+    createTrainee,
+    getTrainee,
+    updateTrainee,
+    deleteTrainee
 };

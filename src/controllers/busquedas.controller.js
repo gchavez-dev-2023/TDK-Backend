@@ -1,5 +1,5 @@
 const { response } = require ('express');
-const Cliente = require('../models/Cliente');
+const Alumno = require('../models/Alumno');
 const Empleado = require('../models/Empleado');
 const Instructor = require('../models/Instructor');
 
@@ -10,17 +10,17 @@ const getFindAll = async(req, res = response ) => {
 
         const regex = new RegExp(buqueda, 'i');
 
-        const [ empleados, instructores, clientes ] = await Promise.all([
+        const [ empleados, instructores, alumnos ] = await Promise.all([
             Empleado.find ({ nombre: regex }).populate('usuario', 'nombre'),
             Instructor.find ({ nombre: regex }).populate('usuario', 'nombre'),
-            Cliente.find ({ nombre: regex }).populate('usuario', 'nombre')
+            Alumno.find ({ nombre: regex }).populate('usuario', 'nombre')
         ]);
 
         res.json({
             ok: true,
             empleados,
             instructores,
-            clientes  
+            alumnos  
         });
 
     } catch (error) {
@@ -51,14 +51,14 @@ const getFindCollectionDocuments = async(req, res = response ) => {
                 data = await Instructor.find({ nombre: regex }).populate('usuario', 'nombre');
                 break;
 
-            case 'clientes':
-                data = await Cliente.find({ nombre: regex }).populate('usuario', 'nombre');
+            case 'alumnos':
+                data = await Alumno.find({ nombre: regex }).populate('usuario', 'nombre');
                 break;
 
             default:
                 return res.status(400).json({
                     ok: false,
-                    msg: 'La tabla debe ser empleados, instructores, clientes'       
+                    msg: 'La tabla debe ser empleados, instructores, alumnos'       
                 });
         }
         

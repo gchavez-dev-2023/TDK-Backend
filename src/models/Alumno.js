@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose');
 
-const ClienteSchema = new Schema({
+const AlumnoSchema = new Schema({
     rut: {type: String, required: true, unique: true},
     nombres: {type: String, required: true},
     apellidos: {type: String, required: true},
@@ -12,15 +12,15 @@ const ClienteSchema = new Schema({
         ref: 'Usuario',        
         required: true
     }
-}, {collection: 'clientes'});
+}, {collection: 'alumnos'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*
-ClienteSchema.method('toJSON', function() {
+AlumnoSchema.method('toJSON', function() {
     const { __v, _id, ...object } = this.toObject();
     object.uid = _id;
     return object;
 });
 */
 
-module.exports = model('Cliente', ClienteSchema);
+module.exports = model('Alumno', AlumnoSchema);

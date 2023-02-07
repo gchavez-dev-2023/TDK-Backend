@@ -78,8 +78,28 @@ const googleSignIn = async (req, res = response) => {
         //Guardar usuario
         await usuario.save();
 
+        res.json({
+            ok: true,
+            token
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+        
+    }
+}
+
+const renewToken = async (req, res = response) => {
+    try {
+        const id = req._id;
+
         //generar token
-        const token = await generarJWT(usuario.id);
+        const token = await generarJWT(id);
+
 
         res.json({
             ok: true,
@@ -98,5 +118,6 @@ const googleSignIn = async (req, res = response) => {
 
 module.exports = {
     login,
-    googleSignIn
+    googleSignIn,
+    renewToken
 }

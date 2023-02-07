@@ -14,7 +14,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(cors());
 
 //carpeta publica, servir html
-app.use( express.static('public'));
+app.use(express.static('public'));
 
 //lectura y parseo del Body
 app.use(express.json());
@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 
 //Rutas
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
-app.use('/api/clientes', require('./routes/clientes.routes'));
+app.use('/api/alumnos', require('./routes/alumnos.routes'));
 app.use('/api/instructores', require('./routes/instructores.routes'));
 app.use('/api/empleados', require('./routes/empleados.routes'));
 

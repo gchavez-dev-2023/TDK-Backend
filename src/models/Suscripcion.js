@@ -1,9 +1,9 @@
 const {Schema, model} = require('mongoose');
 
 const SuscripcionSchema = new Schema({
-    cliente: {
+    alumno: {
         type: Schema.Types.ObjectId,
-        ref: 'Cliente',        
+        ref: 'Alumno',        
         required: true
     },
     clase: {
@@ -28,6 +28,6 @@ SubcripcionSchema.method('toJSON', function() {
 });
 */
 //Crear indices compuestos
-SuscripcionSchema.index({ cliente: 1, clase: 1 }, { unique: true });
+SuscripcionSchema.index({ alumno: 1, clase: 1 }, { unique: true });
 
 module.exports = model('Suscripcion', SuscripcionSchema);

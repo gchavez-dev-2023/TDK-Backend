@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require ('path');
 
-const Cliente = require('../models/Cliente');
+const Alumno = require('../models/Alumno');
 const Empleado = require('../models/Empleado');
 const Instructor = require('../models/Instructor');
 
@@ -18,20 +18,20 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
     let pathViejo;
 
     switch (tipo){
-        case 'clientes':
-            //Treae cliente de BD y verificar si existe
-            const cliente = await Cliente.findById(id);
-            if (!cliente){
-                console.log('No es un Id de Cliente valido.');
+        case 'alumnos':
+            //Treae alumno de BD y verificar si existe
+            const alumno = await Alumno.findById(id);
+            if (!alumno){
+                console.log('No es un Id de Alumno valido.');
                 return false;
             }
 
             //Verificar si existe imagen anterior y borrar el archivo
-            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ cliente.img }`);
+            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ alumno.img }`);
             borrarImagen(pathViejo);
 
-            cliente.img = nombreArchivo;
-            await cliente.save();
+            alumno.img = nombreArchivo;
+            await alumno.save();
             return true;
             break;
 
