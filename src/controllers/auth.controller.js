@@ -1,10 +1,65 @@
-const bcrypt = require('bcryptjs');
+const { encrypt, compareEncryptPasswords } = require('../helpers/cifrador');
 const { response } = require ('express');
 const { googleVerify } = require('../helpers/google-verify');
 const { generarJWT } = require('../helpers/jwt');
 const Usuario = require('../models/Usuario');
+const Rol = require('../models/Rol');
 
-const login = async (req, res = response) => {
+const signUp = async (req, res = response) => {
+    //Desestructurar el body
+    const {email, password, roles} = req.body;
+
+    try {
+        //Buscar por email = email
+        const existeMail = await Usuario.findOne({ email });
+
+        //Si existe correo enviar error
+        if ( existeMail ) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El correo ya está registrado'
+            });
+        }
+
+        //Crear usuario
+        const usuario = new Usuario(req.body);
+
+        //Verificar si llegan los roles, sino se crean
+        /*if (roles){
+            const rolesDB = await Rol.find({name: {$in: roles}});
+            usuario.roles = rolesDB.map(rol => rol._id);
+        }else{
+            //Setear Rol "alumno" por defecto
+            const rol = await Rol.findOne({ nombre: 'alumno'} );
+            usuario.roles = [rol._id];
+        }*/
+
+        //Setear Rol "alumno" por defecto
+        const rol = await Rol.findOne({ nombre: 'alumno'} );
+        usuario.roles = [rol._id];
+
+        //Encriptar constraseña
+        usuario.password = encrypt( password );
+
+        //Guardar nuevo usuario
+        await usuario.save();
+
+        console.log(usuario);
+        res.json({
+            ok: true,
+            usuario       
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }
+}
+
+const signIn = async (req, res = response) => {
     //Desestructurar el body
     const {email, password} = req.body;
 
@@ -22,7 +77,7 @@ const login = async (req, res = response) => {
         }
 
         //Verificar contraseña
-        const validPassword = bcrypt.compareSync(password, usuarioDB.password);
+        const validPassword = compareEncryptPasswords(password, usuarioDB.password);
 
         if (!validPassword){
             return res.status(404).json({
@@ -117,7 +172,8 @@ const renewToken = async (req, res = response) => {
 }
 
 module.exports = {
-    login,
+    signUp,
+    signIn,
     googleSignIn,
     renewToken
-}
+};

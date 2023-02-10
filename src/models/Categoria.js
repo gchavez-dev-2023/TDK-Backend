@@ -4,12 +4,16 @@ const CategoriaSchema = new Schema({
     nombre: {type: String, required: true, unique: true},
     descripcion: {type: String},
     img: {type: String},
-    usuario: {
+    createdByUser: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario',        
-        required: true
-    }
-}, {collection: 'categorias'});
+        ref: 'Usuario',
+    },
+    updatedByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+}, {timestaps: true,
+    collection: 'categorias'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

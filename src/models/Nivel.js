@@ -4,12 +4,16 @@ const NivelSchema = new Schema({
     nombre: {type: String, required: true},
     orden: {type: Number},
     img: {type: String},
-    usuario: {
+    createdByUser: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario',        
-        required: true
-    }
-}, {collection: 'niveles'});
+        ref: 'Usuario',
+    },
+    updatedByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+}, {timestaps: true,
+    collection: 'niveles'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

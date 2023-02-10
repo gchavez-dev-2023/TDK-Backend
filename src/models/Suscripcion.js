@@ -12,12 +12,16 @@ const SuscripcionSchema = new Schema({
         required: true
     },
     fechaSuscripcion: {type: String},
-    usuario: {
+    createdByUser: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario',        
-        required: true
-    }
-}, {collection: 'suscripciones'});
+        ref: 'Usuario',
+    },
+    updatedByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+}, {timestaps: true,
+    collection: 'suscripciones'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

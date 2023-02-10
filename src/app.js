@@ -3,8 +3,11 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const { createInitialSetup } = require('./libs/initialSetup');
 
 const app = express();
+//Setup inicial
+createInitialSetup(); 
 
 console.log('Puerto conexion: ', process.env.PORT);
 //definir puerto
@@ -40,6 +43,6 @@ app.use('/api/suscripciones', require('./routes/suscripciones.routes'));
 app.use('/api/busquedas', require('./routes/busquedas.routes'));
 app.use('/api/uploads', require('./routes/uploads.routes'));
 
-app.use('/api/login', require('./routes/auth.routes'));
+app.use('/api/auth', require('./routes/auth.routes'));
 
 module.exports = app;

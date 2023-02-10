@@ -4,12 +4,16 @@ const SubCategoriaSchema = new Schema({
     nombre: {type: String, required: true},
     descripcion: {type: String},
     img: {type: String},
-    usuario: {
+    createdByUser: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario',        
-        required: true
-    }
-}, {collection: 'subcategorias'});
+        ref: 'Usuario',
+    },
+    updatedByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+}, {timestaps: true,
+    collection: 'subcategorias'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

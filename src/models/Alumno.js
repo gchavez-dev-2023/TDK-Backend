@@ -11,8 +11,17 @@ const AlumnoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario',        
         required: true
-    }
-}, {collection: 'alumnos'});
+    },
+    createdByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+    updatedByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+}, {timestaps: true,
+    collection: 'alumnos'});
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

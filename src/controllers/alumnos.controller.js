@@ -21,27 +21,37 @@ const getTrainees = async (req, res = response) => {
 
 const createTrainee = async (req, res = response) => {
     //Desestructurar el body
-    const {rut, nombres, apellidos, fechaNacimiento, telefono} = req.body;
+    const {rut, nombres, apellidos, fechaNacimiento, telefono, img, usuario} = req.body;
 
-    try {
-        //Buscar por rut = rut
-        const existeRut = await Alumno.findOne({ rut });
-
-        //Si existe rut enviar error
-        if ( existeRut ) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'El rut ya está registrado'
-            });
-        }
+    try {        
         
-        //Obtener el ID del usuario desde el token
-        const usuario = req._id;
+        //Validar si usuario no se informo
+        if(!usuario){
+            const alumnoUsuario = Alumno.findOne({ usuario: req._id});
+            if (alumnoUsuario){
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'El alumno ya está registrado para usuario informado.'
+                });
+
+            }
+            req.usuario = req._id;
+        }
+
+        //Verificar que ID de TOKEN no es igual al USUARIO.ID
+        if(req._id !== usuario) {
+            //Verificar que el rol al menos contenga admin, empleado, instructor
+            if(req.rol.nombre !== 'alumno'){
+                //Retornar error.
+            }
+        }
 
         //Crear alumno
-        const alumno = new Alumno({
-            usuario,
-            ...req.body});
+        const alumno = new Alumno(req.body);
+
+        //Obtener el ID del usuario desde el token
+        alumno.createdByUser = req._id;
+
 
         //Guardar nuevo alumno
         await alumno.save();

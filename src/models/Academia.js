@@ -4,12 +4,16 @@ const AcademiaSchema = new Schema({
     nombre: {type: String, required: true, unique: true},
     direccion: {type: String},
     img: {type: String},
-    usuario: {
+    createdByUser: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario',        
-        required: true
-    }
-}, {collection: 'academias'} );
+        ref: 'Usuario',
+    },
+    updatedByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+}, {timestaps: true,
+    collection: 'academias'} );
 
 //Configuración para que campo "_id" tengo el nombre "uid"
 /*

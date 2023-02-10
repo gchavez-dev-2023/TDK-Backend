@@ -1,10 +1,11 @@
-const bcrypt = require('bcryptjs');
 const { response } = require('express');
+const { encrypt } = require('../helpers/cifrador');
 const Usuario = require('../models/Usuario');
+const Rol = require('../models/Rol');
 
 const getUsers = async (req, res = response) => {
     try {
-        const usuarios = await Usuario.find({}, 'nombre email role google ');
+        const usuarios = await Usuario.find({}, 'email roles google ');
 
         res.json({
             ok: true,
@@ -22,26 +23,27 @@ const getUsers = async (req, res = response) => {
 
 const createUser = async (req, res = response) => {
     //Desestructurar el body
-    const {email, password, nombre} = req.body;
+    const {email, password, roles} = req.body;
 
-    try {
-        //Buscar por email = email
-        const existeMail = await Usuario.findOne({ email });
-
-        //Si existe correo enviar error
-        if ( existeMail ) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'El correo ya está registrado'
-            });
-        }
-        
+    try {        
         //Crear usuario
         const usuario = new Usuario(req.body);
 
         //Encriptar constraseña
-        const salt = bcrypt.genSaltSync();
-        usuario.password = bcrypt.hashSync( password, salt );
+        usuario.password = encrypt( password );
+        
+        //Obtener el ID del usuario desde el token
+        usuario.createdByUser = req._id;
+
+        //Verificar si llegan los roles, sino se crean
+        if (roles){
+            const rolesDB = await Rol.find({name: {$in: roles}});
+            usuario.roles = rolesDB.map(rol => rol._id);
+        }else{
+            //Setear Rol "alumno" por defecto
+            const rol = await Rol.findOne({ nombre: 'alumno'} );
+            usuario.roles = [rol._id];
+        }
 
         //Guardar nuevo usuario
         await usuario.save();
@@ -82,36 +84,12 @@ const getUser = async (req, res = response) => {
 
 const updateUser = async(req, res = response) => {
     //Desestructurar campos enviados desde la peticion
-    const {password, google, email, ...campos } = req.body;
+    const {password, google, ...campos } = req.body;
 
     //console.log(req.params)
     try {
-        //Buscar por BY = ID
-        const existeDB = await Usuario.findById(req.params.id);
-
-        //Si no existe usuario enviar error
-        if ( !existeDB ) {
-            return res.status(404).json({
-                ok: false,
-                msg: 'No existe Usuario por el ID.'
-            });
-        }
-
-        //Verificar si email ya no es igual a del usuario en la BD
-        if (existeDB.email !== email){
-            //Verificar si el email nuevo ya se encuentra registrado
-            const existeMail = await Usuario.findOne({email});
-
-            //Si existe se responde error
-            if (existeMail){
-                return res.status(400).json({
-                    ok: false,
-                    msg: 'El correo ya está registrado'
-                });
-            }
-            //Agregar el mail a los campos a actualizar
-            campos.email = email;
-        }
+        //Obtener el ID del usuario desde el token
+        campos.updatedByUser = req._id;
 
         const usuarioActualizado = await Usuario.findByIdAndUpdate(req.params.id, campos);
 

@@ -11,7 +11,16 @@ const EmpleadoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario',        
         required: true
-    }
-}, {collection: 'empleados'});
+    },
+    createdByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+    updatedByUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
+}, {timestaps: true,
+    collection: 'empleados'});
 
 module.exports = model('Empleado', EmpleadoSchema);

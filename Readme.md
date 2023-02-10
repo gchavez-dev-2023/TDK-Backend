@@ -33,7 +33,7 @@ npm install nodemon --save-dev
 
 Instalar dependencia:
 ``` 
-npm install mongoose
+npm install mongoose --save
 ```
 
 ### Instalar DotENV
@@ -91,6 +91,13 @@ Para esto instalar
 ```
 npm install google-auth-library --save
 ```
+
+## Resumen comandos
+
+```
+npm install express morgan mongoose dotenv cors express-validator bcryptjs jsonwebtoken express-fileupload uuid google-auth-library --save
+```
+
 
 ## Iniciar backend
 
