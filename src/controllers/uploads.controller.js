@@ -11,11 +11,11 @@ const fileUpload = async(req, res = response ) => {
         const id = req.params.id;
 
         //Validar tipos 
-        const tipoValidos = ['academias', 'categorias', 'subcategorias', 'niveles', 'clases', 'empleados', 'instructores', 'alumnos'];
+        const tipoValidos = ['usuarios', 'academias', 'categorias', 'subcategorias', 'niveles', 'clases'];
         if(!tipoValidos.includes(tipo)){
             res.status(400).json({
                 ok: false,
-                msg: 'No es un empleado, instructores, alumnos (tipo).'       
+                msg: 'No es un tipo, valido.'       
             });
         }
 

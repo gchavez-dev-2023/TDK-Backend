@@ -1,9 +1,12 @@
 const fs = require('fs');
 const path = require ('path');
 
-const Alumno = require('../models/Alumno');
-const Empleado = require('../models/Empleado');
-const Instructor = require('../models/Instructor');
+const Usuario = require('../models/Usuario');
+const Academia = require('../models/Academia');
+const Categoria = require('../models/Categoria');
+const SubCategoria = require('../models/SubCategoria');
+const Nivel = require('../models/Nivel');
+const Clase = require('../models/Clase');
 
 const borrarImagen = ( pathImg ) => {
     //console.log(pathImg);
@@ -18,57 +21,111 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
     let pathViejo;
 
     switch (tipo){
-        case 'alumnos':
-            //Treae alumno de BD y verificar si existe
-            const alumno = await Alumno.findById(id);
-            if (!alumno){
-                console.log('No es un Id de Alumno valido.');
+        case 'usuarios':
+            //Trae usuario de BD y verificar si existe
+            const usuario = await Usuario.findById(id);
+            if (!usuario){
+                console.log('No es un Id de Usuario valido.');
                 return false;
             }
 
             //Verificar si existe imagen anterior y borrar el archivo
-            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ alumno.img }`);
+            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ usuario.img }`);
             borrarImagen(pathViejo);
 
-            alumno.img = nombreArchivo;
-            await alumno.save();
+            usuario.img = nombreArchivo;
+            await usuario.save();
             return true;
             break;
 
-        case 'empleados':
-            //Treae Empleado de BD y verificar si existe
-            const empleado = await Empleado.findById(id);
-            if (!empleado){
-                console.log('No es un Id de Empleado valido.');
-                return false;
-            }
+            case 'academias':
+                //Trae usuario de BD y verificar si existe
+                const academia = await Academia.findById(id);
+                if (!academia){
+                    console.log('No es un Id de Academia valido.');
+                    return false;
+                }
+    
+                //Verificar si existe imagen anterior y borrar el archivo
+                pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ academia.img }`);
+                borrarImagen(pathViejo);
+    
+                academia.img = nombreArchivo;
+                await academia.save();
+                return true;
+                break;
 
-            //Verificar si existe imagen anterior y borrar el archivo
-            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ empleado.img }`);
-            borrarImagen(pathViejo);
+            case 'categorias':
+                //Trae usuario de BD y verificar si existe
+                const categoria = await Categoria.findById(id);
+                if (!categoria){
+                    console.log('No es un Id de Categoria valido.');
+                    return false;
+                }
+    
+                //Verificar si existe imagen anterior y borrar el archivo
+                pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ categoria.img }`);
+                borrarImagen(pathViejo);
+    
+                categoria.img = nombreArchivo;
+                await categoria.save();
+                return true;
+                break;
 
-            empleado.img = nombreArchivo;
-            await empleado.save();
-            return true;
-            break;
-        case 'instructores':
-            //Treae Instructor de BD y verificar si existe
-            const instructor = await Instructor.findById(id);
-            if (!instructor){
-                console.log('No es un Id de instructor valido.');
-                return false;
-            }
+            case 'subcategorias':
+                //Trae usuario de BD y verificar si existe
+                const subcategoria = await SubCategoria.findById(id);
+                if (!subcategoria){
+                    console.log('No es un Id de SubCategoria valido.');
+                    return false;
+                }
+    
+                //Verificar si existe imagen anterior y borrar el archivo
+                pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ subcategoria.img }`);
+                borrarImagen(pathViejo);
+    
+                subcategoria.img = nombreArchivo;
+                await subcategoria.save();
+                return true;
+                break;
 
-            //Verificar si existe imagen anterior y borrar el archivo
-            pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ instructor.img }`);
-            
-            borrarImagen(pathViejo);
+            case 'niveles':
+                //Trae usuario de BD y verificar si existe
+                const nivel = await Nivel.findById(id);
+                if (!nivel){
+                    console.log('No es un Id de Nivel valido.');
+                    return false;
+                }
+    
+                //Verificar si existe imagen anterior y borrar el archivo
+                pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ nivel.img }`);
+                borrarImagen(pathViejo);
+    
+                nivel.img = nombreArchivo;
+                await nivel.save();
+                return true;
+                break;
 
-            instructor.img = nombreArchivo;
-            await instructor.save();
-            return true;
-            break;
+            case 'clases':
+                //Trae usuario de BD y verificar si existe
+                const clase = await Clase.findById(id);
+                if (!clase){
+                    console.log('No es un Id de Clase valido.');
+                    return false;
+                }
+    
+                //Verificar si existe imagen anterior y borrar el archivo
+                pathViejo = path.join( __dirname, `../uploads/${ tipo }/${ clase.img }`);
+                borrarImagen(pathViejo);
+    
+                clase.img = nombreArchivo;
+                await clase.save();
+                return true;
+                break;
+    
         default:
+            console.log('Tipo no valido.');
+            return false
             break;
     }
 }

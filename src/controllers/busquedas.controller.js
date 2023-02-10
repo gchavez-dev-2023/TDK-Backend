@@ -1,7 +1,11 @@
 const { response } = require ('express');
-const Alumno = require('../models/Alumno');
-const Empleado = require('../models/Empleado');
-const Instructor = require('../models/Instructor');
+const Usuario = require('../models/Usuario');
+const Clase = require('../models/Clase');
+const Academia = require('../models/Academia');
+const Categoria = require('../models/Categoria');
+const SubCategoria = require('../models/SubCategoria');
+const Nivel = require('../models/Nivel');
+const Suscripcion = require('../models/Suscripcion');
 
 const getFindAll = async(req, res = response ) => {
     
@@ -10,17 +14,15 @@ const getFindAll = async(req, res = response ) => {
 
         const regex = new RegExp(buqueda, 'i');
 
-        const [ empleados, instructores, alumnos ] = await Promise.all([
-            Empleado.find ({ nombre: regex }).populate('usuario', 'nombre'),
-            Instructor.find ({ nombre: regex }).populate('usuario', 'nombre'),
-            Alumno.find ({ nombre: regex }).populate('usuario', 'nombre')
+        const [ usuarios, clases ] = await Promise.all([
+            Usuario.find ({ $or: [ { nombres: regex }, { apellidos: regex }] }),
+            Clase.find ({ nombre: regex }).populate('instructor', 'nombre'),
         ]);
 
         res.json({
             ok: true,
-            empleados,
-            instructores,
-            alumnos  
+            usuarios,
+            clases
         });
 
     } catch (error) {
@@ -43,22 +45,38 @@ const getFindCollectionDocuments = async(req, res = response ) => {
         let data = [];
 
         switch (tabla) {
-            case 'empleados':
-                data = await Empleado.find({ nombre: regex }).populate('usuario', 'nombre');
+            case 'usuarios':
+                data = await Usuario.find({ $or: [ { nombres: regex }, { apellidos: regex }] });
                 break;
 
-            case 'instructores':
-                data = await Instructor.find({ nombre: regex }).populate('usuario', 'nombre');
+            case 'academias':
+                data = await Academia.find({ nombre: regex });
                 break;
 
-            case 'alumnos':
-                data = await Alumno.find({ nombre: regex }).populate('usuario', 'nombre');
+            case 'categorias':
+                data = await Categoria.find({ nombre: regex });
+                break;
+
+            case 'subcategorias':
+                data = await SubCategoria.find({ nombre: regex });
+                break;
+
+            case 'nivel':
+                data = await Nivel.find({ nombre: regex });
+                break;
+
+            case 'clases':
+                data = await Clase.find({ nombre: regex }).populate('instructor', 'nombre');
+                break;
+
+            case 'suscripciones':
+                data = await Suscripcion.find({ nombre: regex }).populate('instructor', 'nombre');
                 break;
 
             default:
                 return res.status(400).json({
                     ok: false,
-                    msg: 'La tabla debe ser empleados, instructores, alumnos'       
+                    msg: 'La tabla debe tener tipo correcto'       
                 });
         }
         

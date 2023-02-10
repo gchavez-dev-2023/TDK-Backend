@@ -28,9 +28,6 @@ app.use(morgan('dev'));
 
 //Rutas
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
-app.use('/api/alumnos', require('./routes/alumnos.routes'));
-app.use('/api/instructores', require('./routes/instructores.routes'));
-app.use('/api/empleados', require('./routes/empleados.routes'));
 
 app.use('/api/academias', require('./routes/academias.routes'));
 app.use('/api/categorias', require('./routes/categorias.routes'));

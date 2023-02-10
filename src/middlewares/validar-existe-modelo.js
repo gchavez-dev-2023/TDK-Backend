@@ -1,4 +1,3 @@
-const Alumno = require("../models/Alumno");
 const Usuario = require("../models/Usuario");
 
 const validateNotExistUserByMail = async (req, res = response, next) => {
@@ -89,38 +88,9 @@ const validateExistUserById = async (req, res = response, next) => {
     next();
 }
 
-const validateNotExistTraineeByMail = async (req, res = response, next) => {
-    //Desestructurar el body
-    const {rut} = req.body;
-    
-    try {
-        if( ( !req.alumno.rut ) || ( req.alumno.rut !== rut ) ){
-            //Buscar por rut = rut
-            const alumno = await Alumno.findOne({ rut });
-    
-            //Si existe correo enviar error
-            if ( alumno ) {
-                return res.status(400).json({
-                    ok: false,
-                    msg: 'El rut ya está registrado'
-                });
-            }
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            ok: false,
-            msg: 'Error insperado... revisar logs'       
-        });
-    }    
-
-    //Continuar el flujo
-    next();
-}
 
 module.exports = {
     validateNotExistUserByMail,
     validateNotExistUserByRut,
-    validateExistUserById,
-    validateNotExistTraineeByMail
+    validateExistUserById
 }
