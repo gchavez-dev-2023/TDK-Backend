@@ -5,7 +5,7 @@ const router = Router();
 
 const { getUsers, createUser, getUser, updateUser, deleteUser } = require('../controllers/usuarios.controller');
 const { validarJWT } = require('../middlewares/validar-jwt');
-const { validateNotExistUserByMail, validateExistUserById } = require('../middlewares/validar-existe-modelo');
+const { validateNotExistUserByMail, validateExistUserById, validateNotExistUserByRut } = require('../middlewares/validar-existe-modelo');
 //CRUD
 // create - read - update - delete
 
@@ -13,11 +13,15 @@ router.get('/', validarJWT, getUsers);
 
 router.post('/', 
     [
-    validarJWT,
+    //validarJWT,
     check('email', 'El email es obligatorio.').isEmail(),
     check('password', 'El password es obligatorio.').not().isEmpty(),
+    check('rut', 'El rut es obligatorio.').not().isEmpty(),
+    check('nombres', 'El nombre es obligatorio.').not().isEmpty(),
+    check('apellidos', 'El apellido es obligatorio.').not().isEmpty(),
     validarCampos,
     validateNotExistUserByMail,
+    validateNotExistUserByRut
     ]
     , createUser);
 
@@ -31,6 +35,7 @@ router.put('/:id',
     validarCampos,
     validateExistUserById,
     validateNotExistUserByMail,
+    validateNotExistUserByRut
     ]
     , updateUser);
     

@@ -5,7 +5,7 @@ const Rol = require('../models/Rol');
 
 const getUsers = async (req, res = response) => {
     try {
-        const usuarios = await Usuario.find({}, 'email roles google ');
+        const usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img');
 
         res.json({
             ok: true,
@@ -23,7 +23,7 @@ const getUsers = async (req, res = response) => {
 
 const createUser = async (req, res = response) => {
     //Desestructurar el body
-    const {email, password, roles} = req.body;
+    const {email, password, roles, rut, nombres, apellidos, fechaNacimiento, telefono, img} = req.body;
 
     try {        
         //Crear usuario

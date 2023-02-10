@@ -3,6 +3,18 @@ const {Schema, model} = require('mongoose');
 const ClaseSchema = new Schema({
     nombre: {type: String, required: true, unique: true},
     descripcion: {type: String},
+    niveles: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Nivel',
+    }],
+    categorias: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Categoria',
+    }],
+    subCategorias: [{
+        type: Schema.Types.ObjectId,
+        ref: 'SubCategoria',
+    }],
     fechaInicio: {type: Date},
     fechaFin: {type: Date},
     img: {type: String},
@@ -13,7 +25,7 @@ const ClaseSchema = new Schema({
     },
     instructor: {
         type: Schema.Types.ObjectId,
-        ref: 'Instructor',
+        ref: 'Usuario',
         required: true
     },
     createdByUser: {

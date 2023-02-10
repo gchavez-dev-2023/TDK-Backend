@@ -1,6 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const UsuarioSchema = new Schema({
+    //Datos Usuario
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     google: {type: Boolean, default: false},
@@ -8,6 +9,26 @@ const UsuarioSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Rol',
     }],
+    //Datos Personales
+    rut: {type: String, required: true, unique: true},
+    nombres: {type: String, required: true},
+    apellidos: {type: String, required: true},
+    fechaNacimiento: {type: Date },
+    telefono: {type: String },
+    img: {type: String},
+    nivel: {
+        type: Schema.Types.ObjectId,
+        ref: 'Nivel',
+    },
+    categoria: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Categoria',
+    }],
+    subCategoria: [{
+        type: Schema.Types.ObjectId,
+        ref: 'SubCategoria',
+    }],
+    //Datos auditoria
     createdByUser: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',

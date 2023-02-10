@@ -3,7 +3,7 @@ const {Schema, model} = require('mongoose');
 const SuscripcionSchema = new Schema({
     alumno: {
         type: Schema.Types.ObjectId,
-        ref: 'Alumno',        
+        ref: 'Usuario',        
         required: true
     },
     clase: {

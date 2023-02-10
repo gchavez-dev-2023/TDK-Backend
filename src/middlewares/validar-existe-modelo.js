@@ -1,7 +1,6 @@
 const Alumno = require("../models/Alumno");
 const Usuario = require("../models/Usuario");
 
-
 const validateNotExistUserByMail = async (req, res = response, next) => {
     //Desestructurar el body
     const {email} = req.body;
@@ -16,6 +15,35 @@ const validateNotExistUserByMail = async (req, res = response, next) => {
                 return res.status(400).json({
                     ok: false,
                     msg: 'El correo ya está registrado'
+                });
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error insperado... revisar logs'       
+        });
+    }    
+
+    //Continuar el flujo
+    next();
+}
+
+const validateNotExistUserByRut = async (req, res = response, next) => {
+    //Desestructurar el body
+    const {rut} = req.body;
+    
+    try {
+        if( ( !req.usuario.rut ) || ( req.usuario.rut !== rut ) ){
+            //Buscar por rut = rut
+            const usuario = await Usuario.findOne({ rut });
+    
+            //Si existe rut enviar error
+            if ( usuario ) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'El rut ya está registrado'
                 });
             }
         }
@@ -92,6 +120,7 @@ const validateNotExistTraineeByMail = async (req, res = response, next) => {
 
 module.exports = {
     validateNotExistUserByMail,
+    validateNotExistUserByRut,
     validateExistUserById,
     validateNotExistTraineeByMail
 }
