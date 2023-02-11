@@ -4,9 +4,14 @@ const Usuario = require('../models/Usuario');
 const Rol = require('../models/Rol');
 
 const getUsers = async (req, res = response) => {
+    const { jerarquiaUsuarioToken } = req;
     try {
-        const usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre');
-
+        if( !jerarquiaUsuarioToken ){
+            //Implementar busqueda por jerarquia 
+            const usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre');
+        }else{
+            const usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre');
+        }
         res.json({
             ok: true,
             usuarios            

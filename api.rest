@@ -1,20 +1,20 @@
 ### Recuperar los usuarios
 GET http://localhost:3000/api/usuarios
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjFmYmVlNWIwYWMzNzdiMGNlMjYiLCJpYXQiOjE2NzYwOTE5MjYsImV4cCI6MTY3NjEzNTEyNn0.4qyUt0d1ofCXXlw0DRA7n4sYmd_POrm57rtT3UIhoEk
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjFmYmVlNWIwYWMzNzdiMGNlMjYiLCJpYXQiOjE2NzYxNDgyNTEsImV4cCI6MTY3NjE5MTQ1MX0.pnI5nuwY7rHr-nHh5uJbs6s3FwFsSGSVc7vO-pQAcMg
 
 #x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjJjYWVlNWIwYWMzNzdiMGNlMmIiLCJpYXQiOjE2NzYxMzIxMTMsImV4cCI6MTY3NjE3NTMxM30.wiGGvVrwSFsqmyKKGXmoWF0NsPfQgXqg8UkKoGMcBPo
 
 ### Crear usuario
 POST http://localhost:3000/api/usuarios
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjFmYmVlNWIwYWMzNzdiMGNlMjYiLCJpYXQiOjE2NzYwOTE5MjYsImV4cCI6MTY3NjEzNTEyNn0.4qyUt0d1ofCXXlw0DRA7n4sYmd_POrm57rtT3UIhoEk
-#x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjJjYWVlNWIwYWMzNzdiMGNlMmIiLCJpYXQiOjE2NzYxMzIxMTMsImV4cCI6MTY3NjE3NTMxM30.wiGGvVrwSFsqmyKKGXmoWF0NsPfQgXqg8UkKoGMcBPo
+#x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjFmYmVlNWIwYWMzNzdiMGNlMjYiLCJpYXQiOjE2NzYxNDgyNTEsImV4cCI6MTY3NjE5MTQ1MX0.pnI5nuwY7rHr-nHh5uJbs6s3FwFsSGSVc7vO-pQAcMg
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjJjYWVlNWIwYWMzNzdiMGNlMmIiLCJpYXQiOjE2NzYxNDgzNDEsImV4cCI6MTY3NjE5MTU0MX0.pThoL7U7peIdmLbuKez1AzyDhjV-WyYvAdWVs7jZOrE
 Content-Type: application/json
 
 {
-    "email": "mario.h@gmail.com",
+    "email": "carlosr.h@gmail.com",
     "password": "1234",    
-    "rut": "20",
-    "nombres": "mario",
+    "rut": "21",
+    "nombres": "carlos rsa",
     "apellidos": "hernandez",
     "roles": [ "63e721faee5b0ac377b0ce19", "63e721faee5b0ac377b0ce1a" ]
 }
