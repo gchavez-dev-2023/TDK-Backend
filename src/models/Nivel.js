@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 
 const NivelSchema = new Schema({
     nombre: {type: String, required: true},
-    orden: {type: Number},
+    jerarquia: {type: Number, required: true},
     img: {type: String},
     createdByUser: {
         type: Schema.Types.ObjectId,

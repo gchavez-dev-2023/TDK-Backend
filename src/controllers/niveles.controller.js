@@ -21,7 +21,7 @@ const getLevels = async (req, res = response) => {
 
 const createLevel = async (req, res = response) => {
     //Desestructurar el body
-    const {nombre, orden} = req.body;
+    const {nombre, jerarquia} = req.body;
 
     try {
         //Buscar por nombre = nombre

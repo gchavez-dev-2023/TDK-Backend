@@ -65,6 +65,8 @@ const signIn = async (req, res = response) => {
 
     try {
         
+        console.log(email);
+
         //Verificar email
         const usuarioDB = await Usuario.findOne({ email });
 
@@ -77,6 +79,9 @@ const signIn = async (req, res = response) => {
         }
 
         //Verificar contraseña
+        console.log(password);
+        console.log(usuarioDB.password);
+
         const validPassword = compareEncryptPasswords(password, usuarioDB.password);
 
         if (!validPassword){

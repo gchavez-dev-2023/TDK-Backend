@@ -2,6 +2,7 @@ const {Schema, model} = require('mongoose');
 
 const RolSchema = new Schema({
     nombre: {type: String, required: true},
+    jerarquia: {type: Number, required: true},
     createdByUser: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',

@@ -5,7 +5,7 @@ const Rol = require('../models/Rol');
 
 const getUsers = async (req, res = response) => {
     try {
-        const usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img');
+        const usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre');
 
         res.json({
             ok: true,
@@ -37,7 +37,7 @@ const createUser = async (req, res = response) => {
 
         //Verificar si llegan los roles, sino se crean
         if (roles){
-            const rolesDB = await Rol.find({name: {$in: roles}});
+            const rolesDB = await Rol.find({_id: {$in: roles}});
             usuario.roles = rolesDB.map(rol => rol._id);
         }else{
             //Setear Rol "alumno" por defecto

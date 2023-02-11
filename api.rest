@@ -1,16 +1,22 @@
 ### Recuperar los usuarios
 GET http://localhost:3000/api/usuarios
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RjMTUzMTI4MDYxYzAyNWM1ZWU5YzgiLCJpYXQiOjE2NzUzNzcwMjYsImV4cCI6MTY3NTQyMDIyNn0.R5xpCjQHToK4mvAgtNC5OqB_6KO_RDY6c_TSSiWtYqs
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjFmYmVlNWIwYWMzNzdiMGNlMjYiLCJpYXQiOjE2NzYwOTE5MjYsImV4cCI6MTY3NjEzNTEyNn0.4qyUt0d1ofCXXlw0DRA7n4sYmd_POrm57rtT3UIhoEk
 
+#x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjJjYWVlNWIwYWMzNzdiMGNlMmIiLCJpYXQiOjE2NzYxMzIxMTMsImV4cCI6MTY3NjE3NTMxM30.wiGGvVrwSFsqmyKKGXmoWF0NsPfQgXqg8UkKoGMcBPo
 
 ### Crear usuario
 POST http://localhost:3000/api/usuarios
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjFmYmVlNWIwYWMzNzdiMGNlMjYiLCJpYXQiOjE2NzYwOTE5MjYsImV4cCI6MTY3NjEzNTEyNn0.4qyUt0d1ofCXXlw0DRA7n4sYmd_POrm57rtT3UIhoEk
+#x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjJjYWVlNWIwYWMzNzdiMGNlMmIiLCJpYXQiOjE2NzYxMzIxMTMsImV4cCI6MTY3NjE3NTMxM30.wiGGvVrwSFsqmyKKGXmoWF0NsPfQgXqg8UkKoGMcBPo
 Content-Type: application/json
 
 {
-    "nombre": "pedro hernandez",
-    "email": "pedro.h@gmail.com",
-    "password": "1234"
+    "email": "andres.h@gmail.com",
+    "password": "1234",    
+    "rut": "27",
+    "nombres": "andres",
+    "apellidos": "hernandez",
+    "roles": [ "63e721faee5b0ac377b0ce1c" ]
 }
 
 ### Recuperar un usuario
@@ -28,16 +34,38 @@ Content-Type: application/json
 }
 
 ### Eliminar un usuario
-DELETE http://localhost:3000/api/usuarios/63d82815d13b0e6d54e76839
+DELETE http://localhost:3000/api/usuarios/63e72b0a05625c23a439b456
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjFmYmVlNWIwYWMzNzdiMGNlMjYiLCJpYXQiOjE2NzYwOTE5MjYsImV4cCI6MTY3NjEzNTEyNn0.4qyUt0d1ofCXXlw0DRA7n4sYmd_POrm57rtT3UIhoEk
 
 
-### login
-POST http://localhost:3000/api/login
+### signin admin
+POST http://localhost:3000/api/auth/signin
+Content-Type: application/json
+
+{
+    "email": "admin@admin.com",
+    "password": "admin"
+}
+
+### signin alumno
+POST http://localhost:3000/api/auth/signin
 Content-Type: application/json
 
 {
     "email": "pedro.h@gmail.com",
     "password": "1234"
+}
+
+### signup
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+    "email": "pedro.h@gmail.com",
+    "password": "1234",    
+    "rut": "2-7",
+    "nombres": "pedro",
+    "apellidos": "hernandez"
 }
 
 ### Recuperar los academias

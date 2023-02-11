@@ -13,10 +13,10 @@ const createInitialSetup = async() => {
             return;
         } else {
             values = await Promise.all([
-                new Rol({nombre: 'alumno'}).save(),
-                new Rol({nombre: 'instructor'}).save(),
-                new Rol({nombre: 'empleado'}).save(),
-                new Rol({nombre: 'administrador'}).save()
+                new Rol({nombre: 'alumno', jerarquia: 10}).save(),
+                new Rol({nombre: 'instructor', jerarquia: 20}).save(),
+                new Rol({nombre: 'empleado', jerarquia: 30}).save(),
+                new Rol({nombre: 'administrador', jerarquia: 99}).save()
             ]);
     
             console.log(values);
@@ -30,7 +30,7 @@ const createInitialSetup = async() => {
             return;
         } else {
             values = await Promise.all([
-                new Usuario({email: 'admin@admin.com', password: encrypt( 'admin' ), roles: [rol]}).save()
+                new Usuario({email: 'admin@admin.com', password: encrypt( 'admin' ), roles: [rol], rut: '1-9', nombres: 'admin', apellidos: 'admin'}).save()
             ]);
 
             console.log(values);
