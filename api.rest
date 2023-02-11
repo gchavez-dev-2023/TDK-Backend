@@ -11,12 +11,12 @@ x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2U3MjFmYmVlNWIwYWMzNz
 Content-Type: application/json
 
 {
-    "email": "andres.h@gmail.com",
+    "email": "mario.h@gmail.com",
     "password": "1234",    
-    "rut": "27",
-    "nombres": "andres",
+    "rut": "20",
+    "nombres": "mario",
     "apellidos": "hernandez",
-    "roles": [ "63e721faee5b0ac377b0ce1c" ]
+    "roles": [ "63e721faee5b0ac377b0ce19", "63e721faee5b0ac377b0ce1a" ]
 }
 
 ### Recuperar un usuario

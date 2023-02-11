@@ -31,11 +31,11 @@ router.get('/:id', validarJWT, getUser);
 router.put('/:id', 
     [
     validarJWT,
-    validateRoleRankByIdUser,
     check('email', 'El email es obligatorio.').isEmail(),
     //check('role', 'El role es obligatorio.').not().isEmpty(),
     validarCampos,
     validateExistUserById,
+    validateRoleRankByIdUser,
     validateNotExistUserByMail,
     validateNotExistUserByRut
     ]

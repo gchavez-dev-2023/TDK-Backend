@@ -96,7 +96,7 @@ const validateRoleRankByIdUser = async (req, res = response, next) => {
     const idRoles = roles;
 
     try {
-
+        //TODO: agregar validacion para cuando se modifiquen, que primero se rescate valor de usuario.
         //console.log('id.token -> ', req._id);
         //Buscar por BY = ID de Token
         const usuarioToken = await Usuario.findById(req._id).populate('roles', 'jerarquia');
@@ -117,7 +117,7 @@ const validateRoleRankByIdUser = async (req, res = response, next) => {
                //( rolesUsuario.fi > 0 ) && (rolesUsuarioToken.count() > 0) 
                //&& 
                //( Math.max(...req.usuario.rol.jerarquia) > Math.max(...rol) ) 
-               && ( Math.max(...rolesUsuarioToken.map(({ jerarquia }) => jerarquia)) <
+               && ( Math.max(...rolesUsuarioToken.map(({ jerarquia }) => jerarquia)) <=
                     Math.max(...rolesUsuario.map(({ jerarquia }) => jerarquia))
                   )
                ) ) {
