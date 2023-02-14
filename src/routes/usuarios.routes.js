@@ -9,7 +9,12 @@ const { validateNotExistUserByMail, validateExistUserById, validateNotExistUserB
 //CRUD
 // create - read - update - delete
 
-router.get('/', validarJWT, getUsers);
+router.get('/', 
+    [
+    validarJWT, 
+    validateRoleRankUserActions
+    ]
+    , getUsers);
 
 router.post('/', 
     [
@@ -26,7 +31,12 @@ router.post('/',
     ]
     , createUser);
 
-router.get('/:id', validarJWT, getUser);
+router.get('/:id', 
+    [
+    validarJWT, 
+    validateRoleRankUserActions
+    ]
+    , getUser);
 
 router.put('/:id', 
     [

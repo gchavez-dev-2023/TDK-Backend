@@ -29,12 +29,8 @@ const validateExistUserById = async (req, res = response, next) => {
 }
 
 const validateNotExistUserByMail = async (req, res = response, next) => {
-    
-    //console.log('validateNotExistUserByMail -> req.body', req.body);
     //Desestructurar el body
     const { email, usuario } = req.body;
-    //console.log('email', email);
-    //console.log('usuario', usuario);    
     
     try {
         if( ( !usuario ) || ( usuario.email !== email ) ){
@@ -110,7 +106,9 @@ const validateRoleRankUserActions = async (req, res = response, next) => {
             });
         }else{
             jerarquiaUsuarioToken = Math.max(...rolesUsuarioToken.map(({ jerarquia }) => jerarquia));
-            req.jerarquiaUsuarioToken = jerarquiaUsuarioToken;
+            //Maximo rol token
+            const rolUsuarioToken = rolesUsuarioToken.find(({ jerarquia }) => jerarquia === jerarquiaUsuarioToken);
+            req.rolUsuarioToken = rolUsuarioToken;
         }
 
         let jerarquiaUsuario;

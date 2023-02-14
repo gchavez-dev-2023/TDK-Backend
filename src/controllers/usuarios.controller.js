@@ -4,13 +4,18 @@ const Usuario = require('../models/Usuario');
 const Rol = require('../models/Rol');
 
 const getUsers = async (req, res = response) => {
-    const { jerarquiaUsuarioToken } = req;
+    const { rolUsuarioToken } = req;
     try {
-        if( !jerarquiaUsuarioToken ){
+        let usuarios
+        console.log(rolUsuarioToken.jerarquia);
+        if( rolUsuarioToken ){
+            //Buscar roles
+            const roles = await Rol.find({ jerarquia: { $lt : rolUsuarioToken.jerarquia }});
+            console.log(roles);
             //Implementar busqueda por jerarquia 
-            const usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre');
+            usuarios = await Usuario.find({roles : { $in : roles}}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre jerarquia');
         }else{
-            const usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre');
+            usuarios = await Usuario.find({}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre jerarquia');
         }
         res.json({
             ok: true,
@@ -71,6 +76,18 @@ const createUser = async (req, res = response) => {
 
 const getUser = async (req, res = response) => {
     try {
+        let usuario
+        console.log(rolUsuarioToken.jerarquia);
+        if( rolUsuarioToken ){
+            //Buscar roles
+            const roles = await Rol.find({ jerarquia: { $lte : rolUsuarioToken.jerarquia }});
+            console.log(roles);
+            //Implementar busqueda por jerarquia 
+            usuario = await Usuario.find({$and : [{ _id : req.params.id }, {roles : { $in : roles}} ]}, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre jerarquia');
+        }else{
+            usuario = await Usuario.find(req.params.id, 'email roles google rut nombres apellidos fechaNacimiento telefono img').populate('roles','nombre jerarquia');
+        }
+
         //console.log(req.params)
         const Usuario = await Usuario.findById(req.params.id);
         
