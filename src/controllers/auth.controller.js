@@ -1,5 +1,5 @@
 const { encrypt, compareEncryptPasswords } = require('../helpers/cifrador');
-const { response } = require ('express');
+const { response } = require('express');
 const { googleVerify } = require('../helpers/google-verify');
 const { generarJWT } = require('../helpers/jwt');
 const Usuario = require('../models/Usuario');
@@ -7,17 +7,28 @@ const Rol = require('../models/Rol');
 
 const signUp = async (req, res = response) => {
     //Desestructurar el body
-    const {email, password, roles} = req.body;
+    const { email, password, rut, nombres, apellidos, roles } = req.body;
 
     try {
         //Buscar por email = email
         const existeMail = await Usuario.findOne({ email });
 
         //Si existe correo enviar error
-        if ( existeMail ) {
+        if (existeMail) {
             return res.status(400).json({
                 ok: false,
                 msg: 'El correo ya está registrado'
+            });
+        }
+
+        //Buscar por rut = rut
+        const existeRut = await Usuario.findOne({ rut });
+
+        //Si existe rut enviar error
+        if (existeRut) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El rut ya está registrado'
             });
         }
 
@@ -35,11 +46,11 @@ const signUp = async (req, res = response) => {
         }*/
 
         //Setear Rol "alumno" por defecto
-        const rol = await Rol.findOne({ nombre: 'alumno'} );
+        const rol = await Rol.findOne({ nombre: 'alumno' });
         usuario.roles = [rol._id];
 
         //Encriptar constraseña
-        usuario.password = encrypt( password );
+        usuario.password = encrypt(password);
 
         //Guardar nuevo usuario
         await usuario.save();
@@ -47,31 +58,31 @@ const signUp = async (req, res = response) => {
         console.log(usuario);
         res.json({
             ok: true,
-            usuario       
+            usuario
         });
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Error insperado... revisar logs'       
+            msg: 'Error insperado... revisar logs'
         });
     }
 }
 
 const signIn = async (req, res = response) => {
     //Desestructurar el body
-    const {email, password} = req.body;
+    const { email, password } = req.body;
 
     try {
-        
+
         console.log(email);
 
         //Verificar email
         const usuarioDB = await Usuario.findOne({ email });
 
         //Si no existe usuario enviar error
-        if ( !usuarioDB ) {
+        if (!usuarioDB) {
             return res.status(404).json({
                 ok: false,
                 msg: 'Usuario/Contreseña invalida'
@@ -84,7 +95,7 @@ const signIn = async (req, res = response) => {
 
         const validPassword = compareEncryptPasswords(password, usuarioDB.password);
 
-        if (!validPassword){
+        if (!validPassword) {
             return res.status(404).json({
                 ok: false,
                 msg: 'Usuario/Contreseña invalida'
@@ -97,22 +108,22 @@ const signIn = async (req, res = response) => {
         res.json({
             ok: true,
             usuario: usuarioDB,
-            token            
+            token
         });
 
     } catch (error) {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Error insperado... revisar logs'       
+            msg: 'Error insperado... revisar logs'
         });
-        
+
     }
 }
 
 const googleSignIn = async (req, res = response) => {
     try {
-        const { email, name, picture} = await googleVerify( req.body.token );
+        const { email, name, picture } = await googleVerify(req.body.token);
 
         //Verificar si hay usuario creado
         const usuarioExiste = await Usuario.findOne({ email });
@@ -127,7 +138,7 @@ const googleSignIn = async (req, res = response) => {
                 //img: picture,
                 google: true
             });
-        }else{ //Si existe, actualizar datos
+        } else { //Si existe, actualizar datos
             usuario = usuarioExiste;
             usuario.google = true;
             usuario.password = '@@@';
@@ -147,9 +158,9 @@ const googleSignIn = async (req, res = response) => {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Error insperado... revisar logs'       
+            msg: 'Error insperado... revisar logs'
         });
-        
+
     }
 }
 
@@ -170,9 +181,9 @@ const renewToken = async (req, res = response) => {
         console.log(error);
         res.status(500).json({
             ok: false,
-            msg: 'Error insperado... revisar logs'       
+            msg: 'Error insperado... revisar logs'
         });
-        
+
     }
 }
 
