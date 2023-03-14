@@ -123,7 +123,8 @@ const signIn = async (req, res = response) => {
 
 const googleSignIn = async (req, res = response) => {
     try {
-        const { email, name, picture } = await googleVerify(req.body.token);
+        //console.log('datos: ', await googleVerify(req.body.token));
+        const { email, sub, given_name, family_name, picture } = await googleVerify(req.body.token);
 
         //Verificar si hay usuario creado
         const usuarioExiste = await Usuario.findOne({ email });
@@ -132,15 +133,20 @@ const googleSignIn = async (req, res = response) => {
         //Si no existe, crearlo con datos de Google
         if (!usuarioExiste) {
             usuario = new Usuario({
-                //nombre : name,
+                rut: sub,
+                nombres: given_name,
+                apellidos: family_name,
                 email,
                 password: '@@@',
                 //img: picture,
                 google: true
             });
+
+            //Setear Rol "alumno" por defecto
+            const rol = await Rol.findOne({ nombre: 'alumno' });
+            usuario.roles = [rol._id];
         } else { //Si existe, actualizar datos
             usuario = usuarioExiste;
-            usuario.google = true;
             usuario.password = '@@@';
             usuario.google = true;
             //usuario.img = picture;
@@ -148,6 +154,9 @@ const googleSignIn = async (req, res = response) => {
 
         //Guardar usuario
         await usuario.save();
+
+        //generar token
+        const token = await generarJWT(usuario.id);
 
         res.json({
             ok: true,
