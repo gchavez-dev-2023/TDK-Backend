@@ -180,10 +180,13 @@ const renewToken = async (req, res = response) => {
         //generar token
         const token = await generarJWT(id);
 
+        //obtener usuario por Id
+        const usuario = await Usuario.findById(id).populate('roles', 'nombre jerarquia');
 
         res.json({
             ok: true,
-            token
+            token,
+            usuario
         });
 
     } catch (error) {
